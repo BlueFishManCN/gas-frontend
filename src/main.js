@@ -5,10 +5,15 @@ import locale from 'element-ui/lib/locale/lang/en'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
 Vue.config.productionTip = false
 
 Vue.use(ElementUI, {locale})
+
+Vue.use(VueAxios, axios)
+axios.defaults.baseURL = 'http://127.0.0.1/gas/index.php';
 
 new Vue({
     router,

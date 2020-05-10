@@ -18,7 +18,7 @@
                     </el-submenu>
                     <el-submenu index="tools">
                         <template slot="title">Tools</template>
-                        <el-menu-item index="balstp">Blastp</el-menu-item>
+                        <el-menu-item index="blastp">Blastp</el-menu-item>
                         <el-menu-item index="hmm">HMM</el-menu-item>
                         <el-menu-item index="macrel">Macrel</el-menu-item>
                     </el-submenu>
