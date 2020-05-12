@@ -13,7 +13,8 @@ Vue.config.productionTip = false
 Vue.use(ElementUI, {locale})
 
 Vue.use(VueAxios, axios)
-axios.defaults.baseURL = '';
+// axios.defaults.baseURL = 'http://127.0.0.1/gas/index.php';
+axios.defaults.baseURL = 'http://106.12.47.33/gas/index.php';
 
 new Vue({
     router,
