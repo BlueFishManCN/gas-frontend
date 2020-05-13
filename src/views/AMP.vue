@@ -5,8 +5,8 @@
                 <h3>Search Filter</h3>
                 <el-button :type="type" round :loading="searchLoading" @click="filter">Do Search</el-button>
                 <el-divider></el-divider>
-                <h4>AMP ID or Family ID</h4>
-                <el-input v-model="id" :maxlength="16" show-word-limit></el-input>
+                <h4>AMP ID</h4>
+                <el-input v-model="ampId" :maxlength="16" show-word-limit></el-input>
                 <el-divider></el-divider>
                 <h4>Sequence</h4>
                 <el-input type="textarea" v-model="sequence" :maxlength="255" show-word-limit :rows="3"
@@ -87,7 +87,6 @@
                 </el-table>
             </el-col>
         </el-row>
-
     </div>
 </template>
 
@@ -106,7 +105,7 @@
 
                 type: 'primary',
                 searchLoading: false,
-                id: '',
+                ampId: '',
                 sequence: '',
                 length: [1, 255],
                 pI: [0, 15],
@@ -144,7 +143,7 @@
                     params: {
                         pageSize: this.pageSize,
                         currentPage: this.currentPage,
-                        id: this.id,
+                        ampId: this.ampId,
                         sequence: this.sequence,
                         minLength: this.length[0],
                         maxLength: this.length[1],
