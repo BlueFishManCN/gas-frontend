@@ -15,6 +15,11 @@ const routes = [
         component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue')
     },
     {
+        path: '/amp',
+        name: 'AMP',
+        component: () => import(/* webpackChunkName: "about" */ '../views/AMP.vue')
+    },
+    {
         path: '/blastp',
         name: 'Blastp',
         component: () => import(/* webpackChunkName: "about" */ '../views/Blastp.vue')

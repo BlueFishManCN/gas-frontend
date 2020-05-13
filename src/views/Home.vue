@@ -1,5 +1,5 @@
 <template>
-    <div class="home">
+    <div id="Home">
         <el-row type="flex" justify="center">
             <el-image style="width: 25%" :src="url" lazy></el-image>
         </el-row>

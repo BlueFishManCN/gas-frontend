@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <el-container>
-            <el-header height="120px">
+            <el-header>
                 <el-row type="flex" justify="center">
                     <el-col :span="22" type="flex" justify="middle">
                         <el-menu mode="horizontal" :default-active="activeIndex" :router="true">
@@ -14,9 +14,9 @@
                             <el-menu-item index="home">HOME</el-menu-item>
                             <el-submenu index="browse">
                                 <template slot="title">Browse</template>
-                                <el-menu-item index="amps">AMPs</el-menu-item>
-                                <el-menu-item index="families">Families</el-menu-item>
-                                <el-menu-item index="environment">Environment</el-menu-item>
+                                <el-menu-item index="amp">AMPs</el-menu-item>
+                                <el-menu-item index="familiy">Families</el-menu-item>
+                                <el-menu-item index="environment">Environments</el-menu-item>
                             </el-submenu>
                             <el-submenu index="tools">
                                 <template slot="title">Tools</template>
@@ -33,7 +33,7 @@
 
             <el-main>
                 <el-row type="flex" justify="center">
-                    <el-col :span="20" type="flex" justify="middle">
+                    <el-col :span="22" type="flex" justify="middle">
                         <router-view/>
                     </el-col>
                 </el-row>
