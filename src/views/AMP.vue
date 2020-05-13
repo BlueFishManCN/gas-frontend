@@ -3,10 +3,17 @@
         <el-row :gutter="24" type="flex" justify="center">
             <el-col :span="4">
                 <h3>Search Filter</h3>
-                <el-button :type="type" round :loading="searchLoading" @click="filter">Do Search</el-button>
+                <el-button size="mini" :type="type" :loading="searchLoading" icon="el-icon-search" @click="filter">
+                    Do Search
+                </el-button>
+                <el-button size="mini" circle :loading="searchLoading" icon="el-icon-refresh" @click="reset">
+                </el-button>
                 <el-divider></el-divider>
                 <h4>AMP ID</h4>
                 <el-input v-model="ampId" :maxlength="16" show-word-limit></el-input>
+                <el-divider></el-divider>
+                <h4>Family ID</h4>
+                <el-input v-model="familyId" :maxlength="16" show-word-limit></el-input>
                 <el-divider></el-divider>
                 <h4>Sequence</h4>
                 <el-input type="textarea" v-model="sequence" :maxlength="255" show-word-limit :rows="3"
@@ -42,7 +49,11 @@
                         range>
                 </el-slider>
                 <el-divider></el-divider>
-                <el-button :type="type" round :loading="searchLoading" @click="filter">Do Search</el-button>
+                <el-button size="mini" :type="type" :loading="searchLoading" icon="el-icon-search" @click="filter">
+                    Do Search
+                </el-button>
+                <el-button size="mini" circle :loading="searchLoading" icon="el-icon-refresh" @click="reset">
+                </el-button>
             </el-col>
             <el-col :span="18">
                 <el-pagination
@@ -106,6 +117,7 @@
                 type: 'primary',
                 searchLoading: false,
                 ampId: '',
+                familyId: '',
                 sequence: '',
                 length: [1, 255],
                 pI: [0, 15],
@@ -136,6 +148,14 @@
                 this.search();
             },
 
+            reset() {
+                this.ampId = '';
+                this.sequence = '';
+                this.length = [1, 255];
+                this.pI = [0, 15];
+                this.charge = [-50, 50];
+                this.filter()
+            },
 
             search() {
                 let self = this;
@@ -144,6 +164,7 @@
                         pageSize: this.pageSize,
                         currentPage: this.currentPage,
                         ampId: this.ampId,
+                        familyId: this.familyId,
                         sequence: this.sequence,
                         minLength: this.length[0],
                         maxLength: this.length[1],
