@@ -1,5 +1,5 @@
 <template>
-    <div id="Home">
+    <div class="Home">
         <el-row type="flex" justify="center">
             <el-image style="width: 25%" :src="url" lazy></el-image>
         </el-row>
@@ -8,7 +8,7 @@
         </el-row>
         <el-row type="flex" justify="center">
             <el-col type="flex" justify="middle">
-                <el-card shadow="hover">
+                <el-card shadow="always">
                     <div slot="header">
                         About GAS
                     </div>

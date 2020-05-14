@@ -1,103 +1,130 @@
 <template>
-    <div id="AMP">
-        <el-row :gutter="24" type="flex" justify="center">
-            <el-col :span="4">
-                <h3>Search Filter</h3>
-                <el-button size="mini" :type="type" :loading="searchLoading" icon="el-icon-search" @click="filter">
-                    Do Search
-                </el-button>
-                <el-button size="mini" circle :loading="searchLoading" icon="el-icon-refresh" @click="reset">
-                </el-button>
-                <el-divider></el-divider>
-                <h4>AMP ID</h4>
-                <el-input v-model="ampId" :maxlength="16" show-word-limit></el-input>
-                <el-divider></el-divider>
-                <h4>Family ID</h4>
-                <el-input v-model="familyId" :maxlength="16" show-word-limit></el-input>
-                <el-divider></el-divider>
-                <h4>Sequence</h4>
-                <el-input type="textarea" v-model="sequence" :maxlength="255" show-word-limit :rows="3"
-                          resize="none"></el-input>
-                <el-divider></el-divider>
-                <h4>Sequence Length</h4>
-                {{length[0]}}-{{length[1]}}
-                <el-slider
-                        v-model="length"
-                        :min="1"
-                        :max="100"
-                        :step="1"
-                        range>
-                </el-slider>
-                <el-divider></el-divider>
-                <h4>pI Range</h4>
-                {{pI[0]}}-{{pI[1]}}
-                <el-slider
-                        v-model="pI"
-                        :min="0"
-                        :max="15"
-                        :step="0.1"
-                        range>
-                </el-slider>
-                <el-divider></el-divider>
-                <h4>Charge Range</h4>
-                {{charge[0]}}-{{charge[1]}}
-                <el-slider
-                        v-model="charge"
-                        :min="-50"
-                        :max="50"
-                        :step="1"
-                        range>
-                </el-slider>
-                <el-divider></el-divider>
-                <el-button size="mini" :type="type" :loading="searchLoading" icon="el-icon-search" @click="filter">
-                    Do Search
-                </el-button>
-                <el-button size="mini" circle :loading="searchLoading" icon="el-icon-refresh" @click="reset">
-                </el-button>
-            </el-col>
-            <el-col :span="18">
-                <el-pagination
-                        style="margin-bottom: 18px"
-                        background
-                        :page-size.sync="pageSize"
-                        :total="count"
-                        :current-page.sync="currentPage"
-                        layout="total, sizes, prev, next"
-                        :page-sizes="[10, 20, 30]"
-                        @size-change="handleSizeChange"
-                        @current-change="handleCurrentChange">
-                </el-pagination>
-                <el-table
-                        v-loading="tableLoading"
-                        element-loading-spinner="el-icon-loading"
-                        :data="tableData"
-                        stripe
-                        border
-                        highlight-current-row
-                        style="width: 100%">
-                    <el-table-column
-                            prop="AMP_ID"
-                            label="AMP ID">
-                    </el-table-column>
-                    <el-table-column
-                            prop="Sequence"
-                            label="Sequence">
-                    </el-table-column>
-                    <el-table-column
-                            prop="pI"
-                            label="pI">
-                    </el-table-column>
-                    <el-table-column
-                            prop="charge"
-                            label="charge">
-                    </el-table-column>
-                    <el-table-column
-                            prop="Family_ID"
-                            label="Family ID">
-                    </el-table-column>
-                </el-table>
-            </el-col>
-        </el-row>
+    <div class="AMP">
+        <el-card shadow="always">
+            <el-row :gutter="20" type="flex" justify="center">
+                <el-col :span="5" type="flex" justify="center">
+                    <h4>Search Filter</h4>
+                    <el-button size="medium" :type="type" :loading="searchLoading" icon="el-icon-search"
+                               @click="filter">Search
+                    </el-button>
+                    <el-button size="medium" circle :loading="searchLoading" icon="el-icon-refresh" @click="reset">
+                    </el-button>
+                    <el-divider></el-divider>
+                    <h4>AMP ID</h4>
+                    <el-input v-model="ampId" :maxlength="16" show-word-limit clearable></el-input>
+                    <el-divider></el-divider>
+                    <h4>Family ID</h4>
+                    <el-input v-model="familyId" :maxlength="16" show-word-limit clearable></el-input>
+                    <el-divider></el-divider>
+                    <h4>Sequence</h4>
+                    <el-input type="textarea" v-model="sequence" :maxlength="100" show-word-limit :rows="3"
+                              resize="none" clearable></el-input>
+                    <el-divider></el-divider>
+                    <h4>Sequence Length</h4>
+                    {{length[0]}}-{{length[1]}}
+                    <el-slider
+                            v-model="length"
+                            :min="10"
+                            :max="100"
+                            :step="1"
+                            range>
+                    </el-slider>
+                    <el-divider></el-divider>
+                    <h4>pI Range</h4>
+                    {{pI[0]}}-{{pI[1]}}
+                    <el-slider
+                            v-model="pI"
+                            :min="0"
+                            :max="15"
+                            :step="0.1"
+                            range>
+                    </el-slider>
+                    <el-divider></el-divider>
+                    <h4>Charge Range</h4>
+                    {{charge[0]}}-{{charge[1]}}
+                    <el-slider
+                            v-model="charge"
+                            :min="-50"
+                            :max="50"
+                            :step="1"
+                            range>
+                    </el-slider>
+                    <el-divider></el-divider>
+                    <el-button size="medium" :type="type" :loading="searchLoading" icon="el-icon-search"
+                               @click="filter">Search
+                    </el-button>
+                    <el-button size="medium" circle :loading="searchLoading" icon="el-icon-refresh" @click="reset">
+                    </el-button>
+                </el-col>
+                <el-col :span="19" type="flex" justify="center">
+                    <el-pagination
+                            style="margin-bottom: 18px"
+                            background
+                            :page-size.sync="pageSize"
+                            :total="count"
+                            :current-page.sync="currentPage"
+                            layout="total, sizes, prev, next"
+                            :page-sizes="[10, 20, 30]"
+                            @size-change="handleSizeChange"
+                            @current-change="handleCurrentChange">
+                    </el-pagination>
+                    <el-table
+                            v-loading="tableLoading"
+                            element-loading-spinner="el-icon-loading"
+                            :data="tableData"
+                            stripe
+                            border
+                            highlight-current-row
+                            style="width: 100%">
+                        <el-table-column
+                                label="AMP ID"
+                                header-align="center"
+                                align="center">
+                            <template slot-scope="scope">
+                                <router-link :to="{path:'/amp_card',query:{AMP_ID:scope.row.AMP_ID}}">
+                                    <el-tag type="info">
+                                        <el-link icon="el-icon-link" type="info" :underline="false">
+                                            {{scope.row.AMP_ID}}
+                                        </el-link>
+                                    </el-tag>
+                                </router-link>
+                            </template>
+                        </el-table-column>
+                        <el-table-column
+                                prop="Sequence"
+                                label="Sequence"
+                                header-align="center">
+                        </el-table-column>
+                        <el-table-column
+                                prop="pI"
+                                label="pI"
+                                header-align="center"
+                                align="center">
+                        </el-table-column>
+                        <el-table-column
+                                prop="charge"
+                                label="charge"
+                                header-align="center"
+                                align="center">
+                        </el-table-column>
+                        <el-table-column
+                                label="Family ID"
+                                header-align="center"
+                                align="center">
+                            <template slot-scope="scope">
+                                <router-link :to="{path:'/family',query:{Family_ID:scope.row.Family_ID}}">
+                                    <el-tag type="info">
+                                        <el-link icon="el-icon-link" type="info" :underline="false">
+                                            {{ scope.row.Family_ID }}
+                                        </el-link>
+                                    </el-tag>
+                                </router-link>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </el-col>
+            </el-row>
+        </el-card>
     </div>
 </template>
 
@@ -119,13 +146,13 @@
                 ampId: '',
                 familyId: '',
                 sequence: '',
-                length: [1, 255],
+                length: [10, 100],
                 pI: [0, 15],
                 charge: [-50, 50]
             }
         },
 
-        created() {
+        mounted() {
             this.tableLoading = true;
             this.search();
         },
@@ -150,8 +177,9 @@
 
             reset() {
                 this.ampId = '';
+                this.familyId = '';
                 this.sequence = '';
-                this.length = [1, 255];
+                this.length = [10, 100];
                 this.pI = [0, 15];
                 this.charge = [-50, 50];
                 this.filter()
@@ -174,8 +202,10 @@
                         maxCharge: this.charge[1]
                     }
                 }).then(function (response) {
-                    self.count = response.data['count'];
-                    self.tableData = response.data['AMP'];
+                    if (response.status === 200) {
+                        self.count = response.data['count'];
+                        self.tableData = response.data['AMP'];
+                    }
                     self.type = 'primary';
                     self.searchLoading = false;
                     self.tableLoading = false;

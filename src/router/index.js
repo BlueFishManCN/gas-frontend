@@ -20,6 +20,16 @@ const routes = [
         component: () => import(/* webpackChunkName: "about" */ '../views/AMP.vue')
     },
     {
+        path: '/amp_card',
+        name: 'AMP_Card',
+        component: () => import(/* webpackChunkName: "about" */ '../views/AMP_Card.vue')
+    },
+    {
+        path: '/family',
+        name: 'Family',
+        component: () => import(/* webpackChunkName: "about" */ '../views/Family.vue')
+    },
+    {
         path: '/blastp',
         name: 'Blastp',
         component: () => import(/* webpackChunkName: "about" */ '../views/Blastp.vue')

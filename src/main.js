@@ -7,6 +7,7 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import echarts from 'echarts'
 
 Vue.config.productionTip = false
 
@@ -15,6 +16,8 @@ Vue.use(ElementUI, {locale})
 Vue.use(VueAxios, axios)
 // axios.defaults.baseURL = 'http://127.0.0.1/gas/index.php';
 axios.defaults.baseURL = 'http://106.12.47.33/gas/index.php';
+
+Vue.prototype.$echarts = echarts
 
 new Vue({
     router,

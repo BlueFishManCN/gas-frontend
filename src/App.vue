@@ -15,7 +15,8 @@
                             <el-submenu index="browse">
                                 <template slot="title">Browse</template>
                                 <el-menu-item index="amp">AMPs</el-menu-item>
-                                <el-menu-item index="familiy">Families</el-menu-item>
+                                <el-menu-item index="amp_card">AMP Card</el-menu-item>
+                                <el-menu-item index="family">Families</el-menu-item>
                                 <el-menu-item index="environment">Environments</el-menu-item>
                             </el-submenu>
                             <el-submenu index="tools">
@@ -72,18 +73,13 @@
             return {
                 activeIndex: 'home',
                 url: require('./assets/logo.png'),
-                year: 0
             };
         },
 
-        created() {
-            this.getYear();
-        },
-
-        methods: {
-            getYear: function () {
-                this.year = new Date().getFullYear();
-            },
+        computed: {
+            year: function () {
+                return new Date().getFullYear();
+            }
         }
     }
 </script>
