@@ -11,148 +11,277 @@
                 </el-button>
             </el-col>
         </el-row>
-        <el-row style="margin-top: 18px" type="flex" justify="center">
+
+        <el-row>
+            <el-col :span="3" :offset="1" type="flex" justify="middle">
+                <h2>AMP Card</h2>
+            </el-col>
+            <el-col :span="6" type="flex" justify="middle">
+                <h3 v-if="!isNull">
+                    <el-tag type="success" effect="dark">
+                        {{AMP_Family[0].AMP_ID}}
+                    </el-tag>
+                </h3>
+                <h3 v-else-if="tabLoading" effect="dark">
+                    <el-tag type="danger">
+                        Searching
+                    </el-tag>
+                </h3>
+                <h3 v-else>
+                    <el-tag type="warning" effect="dark">
+                        No Data. Just search it:)
+                    </el-tag>
+                </h3>
+            </el-col>
+        </el-row>
+        <el-row type="flex" justify="center">
             <el-col>
                 <el-card :shadow="shadow">
                     <el-row type="flex" justify="center">
-                        <el-col :span="22" type="flex" justify="middle">
-                            <el-tabs v-loading="tabLoading" v-model="activeName">
+                        <el-col type="flex" justify="middle">
+                            <el-tabs v-loading="tabLoading" element-loading-spinner="el-icon-loading"
+                                     v-model="activeName" tab-position="left">
                                 <el-tab-pane label="Basic" name="family">
-                                    <el-form ref="AMP_Family" :model="AMP_Family" label-suffix=":"
-                                             size="mini">
-                                        <el-form-item label="AMP_ID">
-                                            <el-tag type="primary">
-                                                {{AMP_Family.AMP_ID}}
-                                            </el-tag>
-                                        </el-form-item>
-                                        <el-form-item label="Sequence">
-                                            {{AMP_Family.Sequence}}
-                                        </el-form-item>
-                                        <el-form-item label="Length">
-                                            {{AMP_Family.Length}}
-                                        </el-form-item>
-                                        <el-form-item label="Family ID">
-                                            <router-link :to="{path:'/family',query:{Family_ID:AMP_Family.Family_ID}}">
-                                                <el-tag type="info">
-                                                    <el-link icon="el-icon-link" type="info" :underline="false">
-                                                        {{AMP_Family.Family_ID}}
-                                                    </el-link>
-                                                </el-tag>
-                                            </router-link>
-                                        </el-form-item>
-                                    </el-form>
+                                    <el-table
+                                            :data="AMP_Family"
+                                            stripe>
+                                        <el-table-column
+                                                prop="Sequence"
+                                                label="Sequence"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="Length"
+                                                label="Length"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="Family_ID"
+                                                label="Family ID"
+                                                header-align="center"
+                                                align="center">
+                                            <template slot-scope="scope">
+                                                <router-link
+                                                        :to="{path:'/family',query:{Family_ID:scope.row.Family_ID}}">
+                                                    <el-tag type="info">
+                                                        <el-link icon="el-icon-link" type="info" :underline="false">
+                                                            {{scope.row.Family_ID}}
+                                                        </el-link>
+                                                    </el-tag>
+                                                </router-link>
+                                            </template>
+                                        </el-table-column>
+                                    </el-table>
                                 </el-tab-pane>
                                 <el-tab-pane label="Features" name="features">
-                                    <el-row type="flex" justify="center">
-                                        <el-col :span="8" type="flex" justify="middle">
-                                            <el-form ref="AMP_Feature" :model="AMP_Feature" label-suffix=":"
-                                                     size="mini">
-                                                <el-form-item label="tinyAA">
-                                                    {{AMP_Feature.tinyAA}}
-                                                </el-form-item>
-                                                <el-form-item label="smallAA">
-                                                    {{AMP_Feature.smallAA}}
-                                                </el-form-item>
-                                                <el-form-item label="aliphaticAA">
-                                                    {{AMP_Feature.aliphaticAA}}
-                                                </el-form-item>
-                                                <el-form-item label="aromaticAA">
-                                                    {{AMP_Feature.aromaticAA}}
-                                                </el-form-item>
-                                                <el-form-item label="nonpolarAA">
-                                                    {{AMP_Feature.nonpolarAA}}
-                                                </el-form-item>
-                                                <el-form-item label="polarAA">
-                                                    {{AMP_Feature.polarAA}}
-                                                </el-form-item>
-                                                <el-form-item label="chargedAA">
-                                                    {{AMP_Feature.chargedAA}}
-                                                </el-form-item>
-                                                <el-form-item label="basicAA">
-                                                    {{AMP_Feature.basicAA}}
-                                                </el-form-item>
-                                                <el-form-item label="acidicAA">
-                                                    {{AMP_Feature.acidicAA}}
-                                                </el-form-item>
-                                                <el-form-item label="charge">
-                                                    {{AMP_Feature.charge}}
-                                                </el-form-item>
-                                                <el-form-item label="pI">
-                                                    {{AMP_Feature.pI}}
-                                                </el-form-item>
-                                            </el-form>
-                                        </el-col>
-                                        <el-col :span="8" type="flex" justify="middle">
-                                            <el-form ref="AMP_Feature" :model="AMP_Feature" label-suffix=":"
-                                                     size="mini">
-                                                <el-form-item label="aindex">
-                                                    {{AMP_Feature.aindex}}
-                                                </el-form-item>
-                                                <el-form-item label="instaindex">
-                                                    {{AMP_Feature.instaindex}}
-                                                </el-form-item>
-                                                <el-form-item label="boman">
-                                                    {{AMP_Feature.boman}}
-                                                </el-form-item>
-                                                <el-form-item label="hydrophobicity">
-                                                    {{AMP_Feature.hydrophobicity}}
-                                                </el-form-item>
-                                                <el-form-item label="hmoment">
-                                                    {{AMP_Feature.hmoment}}
-                                                </el-form-item>
-                                                <el-form-item label="SA.Group1.residue0">
-                                                    {{AMP_Feature['SA.Group1.residue0']}}
-                                                </el-form-item>
-                                                <el-form-item label="SA.Group2.residue0">
-                                                    {{AMP_Feature['SA.Group2.residue0']}}
-                                                </el-form-item>
-                                                <el-form-item label="SA.Group3.residue0">
-                                                    {{AMP_Feature['SA.Group3.residue0']}}
-                                                </el-form-item>
-                                                <el-form-item label="HB.Group1.residue0">
-                                                    {{AMP_Feature['HB.Group1.residue0']}}
-                                                </el-form-item>
-                                                <el-form-item label="HB.Group2.residue0">
-                                                    {{AMP_Feature['HB.Group2.residue0']}}
-                                                </el-form-item>
-                                                <el-form-item label="HB.Group3.residue0">
-                                                    {{AMP_Feature['HB.Group3.residue0']}}
-                                                </el-form-item>
-                                            </el-form>
-                                        </el-col>
-                                        <el-col :span="8" type="flex" justify="middle">
-                                            <el-form ref="AMP_Feature" :model="AMP_Feature" label-suffix=":"
-                                                     size="mini">
-                                                <el-form-item label="AGG">
-                                                    {{AMP_Feature.AGG}}
-                                                </el-form-item>
-                                                <el-form-item label="AMYLO">
-                                                    {{AMP_Feature.AMYLO}}
-                                                </el-form-item>
-                                                <el-form-item label="TURN">
-                                                    {{AMP_Feature.TURN}}
-                                                </el-form-item>
-                                                <el-form-item label="HELIX">
-                                                    {{AMP_Feature.HELIX}}
-                                                </el-form-item>
-                                                <el-form-item label="HELAGG">
-                                                    {{AMP_Feature.HELAGG}}
-                                                </el-form-item>
-                                                <el-form-item label="BETA">
-                                                    {{AMP_Feature.BETA}}
-                                                </el-form-item>
-                                                <el-form-item label="Level_I">
-                                                    {{AMP_Feature.Level_I}}
-                                                </el-form-item>
-                                                <el-form-item label="Level_II">
-                                                    {{AMP_Feature.Level_II}}
-                                                </el-form-item>
-                                                <el-form-item label="Level_III">
-                                                    {{AMP_Feature.Level_III}}
-                                                </el-form-item>
-                                            </el-form>
-                                        </el-col>
-                                    </el-row>
+                                    <el-table
+                                            :data="AMP_Feature"
+                                            stripe
+                                            border>
+                                        <el-table-column
+                                                prop="tinyAA"
+                                                label="tinyAA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="smallAA"
+                                                label="smallAA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="aliphaticAA"
+                                                label="aliphaticAA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="aromaticAA"
+                                                label="aromaticAA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="nonpolarAA"
+                                                label="nonpolarAA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="polarAA"
+                                                label="polarAA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="chargedAA"
+                                                label="chargedAA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="basicAA"
+                                                label="basicAA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                    </el-table>
+                                    <el-table
+                                            :data="AMP_Feature"
+                                            stripe
+                                            border>
+                                        <el-table-column
+                                                prop="acidicAA"
+                                                label="acidicAA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="charge"
+                                                label="charge"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="pI"
+                                                label="pI"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="aindex"
+                                                label="aindex"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="instaindex"
+                                                label="instaindex"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="boman"
+                                                label="boman"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="hydrophobicity"
+                                                label="hydrophobicity"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="hmoment"
+                                                label="hmoment"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                    </el-table>
+                                    <el-table
+                                            :data="AMP_Feature"
+                                            stripe
+                                            border>
+                                        <el-table-column
+                                                prop="SA_Group1_residue0"
+                                                label="SA.Group1.residue0"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="SA_Group2_residue0"
+                                                label="SA.Group2.residue0"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="SA_Group3_residue0"
+                                                label="SA.Group3.residue0"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="HB_Group1_residue0"
+                                                label="HB.Group1.residue0"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="HB_Group2_residue0"
+                                                label="HB.Group2.residue0"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="HB_Group3_residue0"
+                                                label="HB.Group3.residue0"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                    </el-table>
+                                    <el-table
+                                            :data="AMP_Feature"
+                                            stripe
+                                            border>
+                                        <el-table-column
+                                                prop="AGG"
+                                                label="AGG"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="AMYLO"
+                                                label="AMYLO"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="TURN"
+                                                label="TURN"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="HELIX"
+                                                label="HELIX"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="HELAGG"
+                                                label="HELAGG"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="BETA"
+                                                label="BETA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="Level_I"
+                                                label="Level_I"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="Level_II"
+                                                label="Level_II"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="Level_III"
+                                                label="Level_III"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                    </el-table>
                                 </el-tab-pane>
                                 <el-tab-pane label="Metagenomes" name="metagenome">
                                     <el-tag style="margin-right: 18px; margin-bottom: 18px"
@@ -166,31 +295,331 @@
                                     </el-tag>
                                 </el-tab-pane>
                                 <el-tab-pane label="Prediction" name="prediction">
-                                    <el-form ref="AMP_Prediction" :model="AMP_Prediction"
-                                             label-suffix=":"
-                                             size="mini">
-                                        <el-form-item label="AMP Class">
-                                            {{AMP_Prediction.AMP_Class}}
-                                        </el-form-item>
-                                        <el-form-item label="AMP Probability">
-                                            {{AMP_Prediction.AMP_Probability}}
-                                        </el-form-item>
-                                        <el-form-item label="Hemolysis Class">
-                                            {{AMP_Prediction.Hemolysis_Class}}
-                                        </el-form-item>
-                                        <el-form-item label="Hemolysis Probability">
-                                            {{AMP_Prediction.Hemolysis_Probability}}
-                                        </el-form-item>
-                                    </el-form>
+                                    <el-table
+                                            :data="AMP_Prediction"
+                                            stripe>
+                                        <el-table-column
+                                                prop="AMP_Class"
+                                                label="AMP Class"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="AMP_Probability"
+                                                label="AMP Probability"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="Hemolysis_Class"
+                                                label="Hemolysis Class"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="Hemolysis_Probability"
+                                                label="Hemolysis Probability"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                    </el-table>
                                 </el-tab-pane>
-                                <el-tab-pane label="Country" name="country">
+                                <el-tab-pane label="Countries" name="country">
+                                    <el-table
+                                            :data="AMP_Country"
+                                            stripe>
+                                        <el-table-column
+                                                prop="Asia"
+                                                label="Asia"
+                                                header-align="center"
+                                                align="center">
+                                            <template slot-scope="scope">
+                                                <el-tag v-if="scope.row.Asia>0" type="info" effect="dark">
+                                                    {{scope.row.Asia}}
+                                                </el-tag>
+                                                <el-tag v-else type="info" effect="plain">
+                                                    {{scope.row.Asia}}
+                                                </el-tag>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="Europe"
+                                                label="Europe"
+                                                header-align="center"
+                                                align="center">
+                                            <template slot-scope="scope">
+                                                <el-tag v-if="scope.row.Europe>0" type="info" effect="dark">
+                                                    {{scope.row.Europe}}
+                                                </el-tag>
+                                                <el-tag v-else type="info" effect="plain">
+                                                    {{scope.row.Europe}}
+                                                </el-tag>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="Africa"
+                                                label="Africa"
+                                                header-align="center"
+                                                align="center">
+                                            <template slot-scope="scope">
+                                                <el-tag v-if="scope.row.Africa>0" type="info" effect="dark">
+                                                    {{scope.row.Africa}}
+                                                </el-tag>
+                                                <el-tag v-else type="info" effect="plain">
+                                                    {{scope.row.Africa}}
+                                                </el-tag>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="South_America"
+                                                label="SouthAmerica"
+                                                header-align="center"
+                                                align="center">
+                                            <template slot-scope="scope">
+                                                <el-tag v-if="scope.row.South_America>0" type="info" effect="dark">
+                                                    {{scope.row.South_America}}
+                                                </el-tag>
+                                                <el-tag v-else type="info" effect="plain">
+                                                    {{scope.row.South_America}}
+                                                </el-tag>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="North_America"
+                                                label="NorthAmerica"
+                                                header-align="center"
+                                                align="center">
+                                            <template slot-scope="scope">
+                                                <el-tag v-if="scope.row.North_America>0" type="info" effect="dark">
+                                                    {{scope.row.North_America}}
+                                                </el-tag>
+                                                <el-tag v-else type="info" effect="plain">
+                                                    {{scope.row.North_America}}
+                                                </el-tag>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="Oceania"
+                                                label="Oceania"
+                                                header-align="center"
+                                                align="center">
+                                            <template slot-scope="scope">
+                                                <el-tag v-if="scope.row.Oceania>0" type="info" effect="dark">
+                                                    {{scope.row.Oceania}}
+                                                </el-tag>
+                                                <el-tag v-else type="info" effect="plain">
+                                                    {{scope.row.Oceania}}
+                                                </el-tag>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="Pacific_Ocean"
+                                                label="PacificOcean"
+                                                header-align="center"
+                                                align="center">
+                                            <template slot-scope="scope">
+                                                <el-tag v-if="scope.row.Pacific_Ocean>0" type="info" effect="dark">
+                                                    {{scope.row.Pacific_Ocean}}
+                                                </el-tag>
+                                                <el-tag v-else type="info" effect="plain">
+                                                    {{scope.row.Pacific_Ocean}}
+                                                </el-tag>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="New_Zaeland"
+                                                label="NewZaeland"
+                                                header-align="center"
+                                                align="center">
+                                            <template slot-scope="scope">
+                                                <el-tag v-if="scope.row.New_Zaeland>0" type="info" effect="dark">
+                                                    {{scope.row.New_Zaeland}}
+                                                </el-tag>
+                                                <el-tag v-else type="info" effect="plain">
+                                                    {{scope.row.New_Zaeland}}
+                                                </el-tag>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="na"
+                                                label="na"
+                                                header-align="center"
+                                                align="center">
+                                            <template slot-scope="scope">
+                                                <el-tag v-if="scope.row.na>0" type="info" effect="dark">
+                                                    {{scope.row.na}}
+                                                </el-tag>
+                                                <el-tag v-else type="info" effect="plain">
+                                                    {{scope.row.na}}
+                                                </el-tag>
+                                            </template>
+                                        </el-table-column>
+                                    </el-table>
                                     <el-row type="flex" justify="center">
-                                        <div id="country" style="width: 800px;height:400px;"></div>
+                                        <div id="country" style="width: 400px;height:300px;"></div>
                                     </el-row>
                                 </el-tab-pane>
-                                <el-tab-pane label="Environment" name="environment">
+                                <el-tab-pane label="Environments" name="environment">
+                                    <el-table
+                                            :data="AMP_Environment"
+                                            stripe>
+                                        <el-table-column
+                                                prop="Freshwater"
+                                                label="Freshwater"
+                                                header-align="center"
+                                                align="center">
+                                            <template slot-scope="scope">
+                                                <el-tag v-if="scope.row.Freshwater>0" type="info" effect="dark">
+                                                    {{scope.row.Freshwater}}
+                                                </el-tag>
+                                                <el-tag v-else type="info" effect="plain">
+                                                    {{scope.row.Freshwater}}
+                                                </el-tag>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="Gut"
+                                                label="Gut"
+                                                header-align="center"
+                                                align="center">
+                                            <template slot-scope="scope">
+                                                <el-tag v-if="scope.row.Gut>0" type="info" effect="dark">
+                                                    {{scope.row.Gut}}
+                                                </el-tag>
+                                                <el-tag v-else type="info" effect="plain">
+                                                    {{scope.row.Gut}}
+                                                </el-tag>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="Marine"
+                                                label="Marine"
+                                                header-align="center"
+                                                align="center">
+                                            <template slot-scope="scope">
+                                                <el-tag v-if="scope.row.Marine>0" type="info" effect="dark">
+                                                    {{scope.row.Marine}}
+                                                </el-tag>
+                                                <el-tag v-else type="info" effect="plain">
+                                                    {{scope.row.Marine}}
+                                                </el-tag>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="Milk"
+                                                label="Milk"
+                                                header-align="center"
+                                                align="center">
+                                            <template slot-scope="scope">
+                                                <el-tag v-if="scope.row.Milk>0" type="info" effect="dark">
+                                                    {{scope.row.Milk}}
+                                                </el-tag>
+                                                <el-tag v-else type="info" effect="plain">
+                                                    {{scope.row.Milk}}
+                                                </el-tag>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="Oral_Cavity"
+                                                label="OralCavity"
+                                                header-align="center"
+                                                align="center">
+                                            <template slot-scope="scope">
+                                                <el-tag v-if="scope.row.Oral_Cavity>0" type="info" effect="dark">
+                                                    {{scope.row.Oral_Cavity}}
+                                                </el-tag>
+                                                <el-tag v-else type="info" effect="plain">
+                                                    {{scope.row.Oral_Cavity}}
+                                                </el-tag>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="Respiratory_Tract"
+                                                label="RespiratoryTract"
+                                                header-align="center"
+                                                align="center">
+                                            <template slot-scope="scope">
+                                                <el-tag v-if="scope.row.Respiratory_Tract>0" type="info" effect="dark">
+                                                    {{scope.row.Respiratory_Tract}}
+                                                </el-tag>
+                                                <el-tag v-else type="info" effect="plain">
+                                                    {{scope.row.Respiratory_Tract}}
+                                                </el-tag>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="Skin"
+                                                label="Skin"
+                                                header-align="center"
+                                                align="center">
+                                            <template slot-scope="scope">
+                                                <el-tag v-if="scope.row.Skin>0" type="info" effect="dark">
+                                                    {{scope.row.Skin}}
+                                                </el-tag>
+                                                <el-tag v-else type="info" effect="plain">
+                                                    {{scope.row.Skin}}
+                                                </el-tag>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="Soil"
+                                                label="Soil"
+                                                header-align="center"
+                                                align="center">
+                                            <template slot-scope="scope">
+                                                <el-tag v-if="scope.row.Soil>0" type="info" effect="dark">
+                                                    {{scope.row.Soil}}
+                                                </el-tag>
+                                                <el-tag v-else type="info" effect="plain">
+                                                    {{scope.row.Soil}}
+                                                </el-tag>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="Surface"
+                                                label="Surface"
+                                                header-align="center"
+                                                align="center">
+                                            <template slot-scope="scope">
+                                                <el-tag v-if="scope.row.Surface>0" type="info" effect="dark">
+                                                    {{scope.row.Surface}}
+                                                </el-tag>
+                                                <el-tag v-else type="info" effect="plain">
+                                                    {{scope.row.Surface}}
+                                                </el-tag>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="Vagina"
+                                                label="Vagina"
+                                                header-align="center"
+                                                align="center">
+                                            <template slot-scope="scope">
+                                                <el-tag v-if="scope.row.Vagina>0" type="info" effect="dark">
+                                                    {{scope.row.Vagina}}
+                                                </el-tag>
+                                                <el-tag v-else type="info" effect="plain">
+                                                    {{scope.row.Vagina}}
+                                                </el-tag>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="Wastewater"
+                                                label="Wastewater"
+                                                header-align="center"
+                                                align="center">
+                                            <template slot-scope="scope">
+                                                <el-tag v-if="scope.row.Wastewater>0" type="info" effect="dark">
+                                                    {{scope.row.Wastewater}}
+                                                </el-tag>
+                                                <el-tag v-else type="info" effect="plain">
+                                                    {{scope.row.Wastewater}}
+                                                </el-tag>
+                                            </template>
+                                        </el-table-column>
+                                    </el-table>
                                     <el-row type="flex" justify="center">
-                                        <div id="environment" style="width: 800px;height:400px;"></div>
+                                        <div id="environment" style="width: 400px;height:300px;"></div>
                                     </el-row>
                                 </el-tab-pane>
                             </el-tabs>
@@ -221,12 +650,12 @@
                 isNull: true,
                 tabLoading: false,
                 activeName: 'family',
-                AMP_Family: {},
-                AMP_Feature: {},
-                AMP_Country: {},
-                AMP_Environment: {},
+                AMP_Family: [],
+                AMP_Feature: [],
+                AMP_Country: [],
+                AMP_Environment: [],
                 AMP_Metagenome: {},
-                AMP_Prediction: {}
+                AMP_Prediction: []
             }
         },
 
@@ -244,40 +673,32 @@
         mounted() {
             if (Object.keys(this.$route.query).length !== 0) {
                 this.ampId = this.$route.query.AMP_ID;
-                this.tabLoading = true;
                 this.search();
-            } else {
-                this.$notify.info({
-                    title: 'No Data',
-                    message: 'Just search it.'
-                });
             }
         },
 
         methods: {
             clickSearch() {
                 if (this.ampId !== "") {
-                    this.type = "danger"
+                    this.type = "danger";
                     this.buttonLoading = true;
                     this.search();
                 } else {
-                    this.AMP_Family = {};
-                    this.AMP_Feature = {};
+                    this.AMP_Family = [];
+                    this.AMP_Feature = [];
                     this.AMP_Metagenome = {};
-                    this.AMP_Prediction = {};
-                    this.AMP_Country = {};
-                    this.AMP_Environment = {};
+                    this.AMP_Prediction = [];
+                    this.AMP_Country = [];
+                    this.AMP_Environment = [];
                     this.isNull = true;
                     this.drawCountryChart();
                     this.drawEnvironmentChart();
-                    this.$notify.info({
-                        title: 'No Data'
-                    });
                 }
             },
 
             search() {
                 let self = this;
+                this.isNull = true;
                 this.tabLoading = true;
                 this.axios.get('/amp_card/index', {
                     params: {
@@ -285,28 +706,25 @@
                     }
                 }).then(function (response) {
                     if (response.status === 200) {
-                        self.AMP_Family = response.data['AMP_Family'][0];
-                        self.AMP_Feature = response.data['AMP_Feature'][0];
+                        self.AMP_Family = response.data['AMP_Family'];
+                        self.AMP_Feature = response.data['AMP_Feature'];
                         self.AMP_Metagenome = response.data['AMP_Metagenome'];
-                        self.AMP_Prediction = response.data['AMP_Prediction'][0];
-                        self.AMP_Country = response.data['AMP_Country'][0];
-                        self.AMP_Environment = response.data['AMP_Environment'][0];
+                        self.AMP_Prediction = response.data['AMP_Prediction'];
+                        self.AMP_Country = response.data['AMP_Country'];
+                        self.AMP_Environment = response.data['AMP_Environment'];
                         self.isNull = false;
                         self.drawCountryChart();
                         self.drawEnvironmentChart();
                     } else if (response.status === 204) {
-                        self.AMP_Family = {};
-                        self.AMP_Feature = {};
+                        self.AMP_Family = [];
+                        self.AMP_Feature = [];
                         self.AMP_Metagenome = {};
-                        self.AMP_Prediction = {};
-                        self.AMP_Country = {};
-                        self.AMP_Environment = {};
+                        self.AMP_Prediction = [];
+                        self.AMP_Country = [];
+                        self.AMP_Environment = [];
                         self.isNull = true;
                         self.drawCountryChart();
                         self.drawEnvironmentChart();
-                        self.$notify.info({
-                            title: 'No Data'
-                        });
                     }
                     self.type = 'primary';
                     self.buttonLoading = false;
@@ -317,103 +735,151 @@
             },
 
             drawCountryChart() {
+                let self = this;
                 // 基于准备好的dom，初始化echarts实例
                 var myChart = this.$echarts.init(document.getElementById('country'));
 
-                // 指定图表的配置项和数据
-                var data = [];
-                data.push(this.AMP_Country['Asia']);
-                data.push(this.AMP_Country['Europe']);
-                data.push(this.AMP_Country['Africa']);
-                data.push(this.AMP_Country['South_America']);
-                data.push(this.AMP_Country['North_America']);
-                data.push(this.AMP_Country['Oceania']);
-                data.push(this.AMP_Country['Pacific_Ocean']);
-                data.push(this.AMP_Country['New_Zaeland']);
-                data.push(this.AMP_Country['na']);
+                if (self.AMP_Country.length > 0) {
+                    delete self.AMP_Country[0]['id'];
+                    delete self.AMP_Country[0]['AMP_ID'];
 
-                var option = {
-                    xAxis: {
-                        type: 'value',
-                        splitLine: {
-                            show: false
-                        }
-                    },
-                    yAxis: {
-                        type: 'category',
-                        data: ['Asia', 'Europe', 'Africa', 'SouthAmerica', 'NorthAmerica', 'Oceania', 'PacificOcean', 'NewZaeland', 'na'],
-                        axisLabel: {
-                            rotate: 45,
-                            margin: 3
+                    // 指定图表的配置项和数据
+                    var option = {
+                        toolbox: {
+                            feature: {
+                                magicType: {
+                                    type: ['line', 'bar'],
+                                    title: {
+                                        line: 'for line charts',
+                                        bar: 'for line charts',
+                                    }
+                                },
+                                saveAsImage: {
+                                    title: 'save as image',
+                                    pixelRatio: 2
+                                }
+                            }
                         },
-                        splitLine: {
-                            show: false
-                        }
-                    },
-                    series: [{
-                        type: 'bar',
-                        data: data,
-                        color: '#000000',
-                        label: {
-                            show: true,
-                            position: 'right'
+                        xAxis: {
+                            type: 'value',
+                            axisLabel: {
+                                fontSize: 14
+                            },
+                            splitLine: {
+                                show: false
+                            }
                         },
-                    }],
-                };
+                        grid: [{
+                            top: '10%',
+                            bottom: '5%',
+                            left: '5%',
+                            right: '10%',
+                            containLabel: true
+                        }],
+                        yAxis: {
+                            type: 'category',
+                            data: Object.keys(self.AMP_Country[0]),
+                            axisLabel: {
+                                rotate: 30,
+                                fontSize: 14
+                            },
+                            splitLine: {
+                                show: false
+                            }
+                        },
+                        series: [{
+                            type: 'bar',
+                            data: Object.keys(self.AMP_Country[0]).map(function (key) {
+                                return self.AMP_Country[0][key];
+                            }),
+                            color: '#000000',
+                            label: {
+                                show: true,
+                                position: 'right',
+                                fontSize: 14
+                            },
+                        }],
+                    };
 
-                // 使用刚指定的配置项和数据显示图表。
-                myChart.setOption(option);
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart.setOption(option);
+                } else {
+                    myChart.clear();
+                }
             },
 
             drawEnvironmentChart() {
+                let self = this;
                 // 基于准备好的dom，初始化echarts实例
                 var myChart = this.$echarts.init(document.getElementById('environment'));
 
-                // 指定图表的配置项和数据
-                var data = [];
-                data.push(this.AMP_Environment['Freshwater']);
-                data.push(this.AMP_Environment['Gut']);
-                data.push(this.AMP_Environment['Marine']);
-                data.push(this.AMP_Environment['Milk']);
-                data.push(this.AMP_Environment['Oral_Cavity']);
-                data.push(this.AMP_Environment['Respiratory_Tract']);
-                data.push(this.AMP_Environment['Skin']);
-                data.push(this.AMP_Environment['Soil']);
-                data.push(this.AMP_Environment['Surface']);
-                data.push(this.AMP_Environment['Vagina']);
-                data.push(this.AMP_Environment['Wastewater']);
+                if (self.AMP_Environment.length > 0) {
+                    delete self.AMP_Environment[0]['id'];
+                    delete self.AMP_Environment[0]['AMP_ID'];
 
-                var option = {
-                    xAxis: {
-                        type: 'value',
-                        splitLine: {
-                            show: false
-                        }
-                    },
-                    yAxis: {
-                        type: 'category',
-                        data: ['Freshwater', 'Gut', 'Marine', 'Milk', 'OralCavity', 'RespiratoryTract', 'Skin', 'Soil', 'Surface', 'Vagina', 'Wastewater'],
-                        axisLabel: {
-                            rotate: 45,
-                            margin: 3
+                    // 指定图表的配置项和数据
+                    var option = {
+                        toolbox: {
+                            feature: {
+                                magicType: {
+                                    type: ['line', 'bar'],
+                                    title: {
+                                        line: 'for line charts',
+                                        bar: 'for line charts',
+                                    }
+                                },
+                                saveAsImage: {
+                                    title: 'save as image',
+                                    pixelRatio: 2
+                                }
+                            }
                         },
-                        splitLine: {
-                            show: false
-                        }
-                    },
-                    series: [{
-                        type: 'bar',
-                        data: data,
-                        color: '#000000',
-                        label: {
-                            show: true,
-                            position: 'right'
+                        xAxis: {
+                            type: 'value',
+                            axisLabel: {
+                                fontSize: 14
+                            },
+                            splitLine: {
+                                show: false
+                            }
                         },
-                    }],
-                };
+                        grid: [{
+                            top: '10%',
+                            bottom: '5%',
+                            left: '5%',
+                            right: '10%',
+                            containLabel: true
+                        }],
+                        yAxis: {
+                            type: 'category',
+                            data: Object.keys(self.AMP_Environment[0]),
+                            axisLabel: {
+                                rotate: 30,
+                                fontSize: 14
+                            },
+                            splitLine: {
+                                show: false
+                            }
+                        },
+                        series: [{
+                            type: 'bar',
+                            data: Object.keys(self.AMP_Environment[0]).map(function (key) {
+                                return self.AMP_Environment[0][key];
+                            }),
+                            color: '#000000',
+                            label: {
+                                show: true,
+                                position: 'right',
+                                fontSize: 14
+                            },
+                        }],
+                    };
 
-                // 使用刚指定的配置项和数据显示图表。
-                myChart.setOption(option);
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart.setOption(option);
+                } else {
+                    myChart.clear();
+                }
             }
         }
     }

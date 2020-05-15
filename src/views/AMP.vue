@@ -74,8 +74,7 @@
                             :data="tableData"
                             stripe
                             border
-                            highlight-current-row
-                            style="width: 100%">
+                            highlight-current-row>
                         <el-table-column
                                 label="AMP ID"
                                 header-align="center"
