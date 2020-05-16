@@ -1,64 +1,619 @@
 <template>
-    <div id="Family">
+    <div class="Family_Card">
         <el-row :gutter="12" type="flex" justify="end">
             <el-col :span="8" type="flex" justify="middle">
-                <el-input v-model="familyId" :maxlength="16" show-word-limit placeholder="Family ID"></el-input>
+                <el-input v-model="familyId" :maxlength="16" show-word-limit placeholder="Family ID"
+                          clearable></el-input>
             </el-col>
-            <el-col :span="4" type="flex" justify="middle">
-                <el-button :type="type" :loading="searchLoading" icon="el-icon-search" @click="search">
+            <el-col :span="3" type="flex" justify="middle">
+                <el-button size="medium" :type="type" :loading="buttonLoading" icon="el-icon-search"
+                           @click="clickSearch">
                     Search
                 </el-button>
             </el-col>
         </el-row>
-        <el-row style="margin-top: 18px" type="flex" justify="center">
-            <el-col :span="22">
-                <el-card shadow="always">
 
+        <el-row>
+            <el-col :span="4" type="flex" justify="middle">
+                <h2>Family Card</h2>
+            </el-col>
+            <el-col :span="6" type="flex" justify="middle">
+                <h3 v-if="!isNull">
+                    <el-tag type="success" effect="dark">
+                        {{Family_AMP[0].Family_ID}}
+                    </el-tag>
+                </h3>
+                <h3 v-else-if="tabLoading" effect="dark">
+                    <el-tag type="danger">
+                        Searching
+                    </el-tag>
+                </h3>
+                <h3 v-else>
+                    <el-tag type="warning" effect="dark">
+                        No Data. Just search it:)
+                    </el-tag>
+                </h3>
+            </el-col>
+        </el-row>
+        <el-row type="flex" justify="center">
+            <el-col>
+                <el-card :shadow="shadow">
+                    <el-row type="flex" justify="center">
+                        <el-col type="flex" justify="middle">
+                            <el-tabs v-loading="tabLoading" element-loading-spinner="el-icon-loading"
+                                     v-model="activeName" tab-position="left">
+                                <el-tab-pane label="Basic" name="family_amp">
+                                    <el-table
+                                            :data="Family_AMP"
+                                            stripe
+                                            border>
+                                        <el-table-column
+                                                prop="AMP_Count"
+                                                label="Sequences"
+                                                header-align="center"
+                                                align="center">
+                                            <template slot-scope="scope">
+                                                <router-link
+                                                        :to="{path:'/amp',query:{Family_ID:scope.row.Family_ID}}">
+                                                    <el-tag type="info">
+                                                        <el-link icon="el-icon-connection" type="info"
+                                                                 :underline="false">
+                                                            {{scope.row.AMP_Count}}
+                                                        </el-link>
+                                                    </el-tag>
+                                                </router-link>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="Length_Avg"
+                                                label="Avg Length"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                label="Clustering level"
+                                                header-align="center"
+                                                align="center">
+                                            3
+                                        </el-table-column>
+                                    </el-table>
+                                    <el-divider></el-divider>
+                                    <el-row type="flex" justify="center">
+                                        <h4>Downloads</h4>
+                                    </el-row>
+                                    <el-table
+                                            :data="Family_Avg_Feature"
+                                            stripe
+                                            border>
+                                        <el-table-column
+                                                label="HMM Logo"
+                                                header-align="center"
+                                                align="center">
+                                            <el-link style="font-size: 36px" icon="el-icon-picture"
+                                                     :href="$baseURL+'logo/'+familyId+'.pdf'"
+                                                     type="info" target="_blank" :underline="false">
+                                            </el-link>
+                                        </el-table-column>
+                                        <el-table-column
+                                                label="Tree Figure"
+                                                header-align="center"
+                                                align="center">
+                                            <el-link style="font-size: 36px" icon="el-icon-s-fold"
+                                                     :href="$baseURL+'trees_figures/'+familyId+'.ascII.txt'"
+                                                     type="info" target="_blank" :underline="false">
+                                            </el-link>
+                                        </el-table-column>
+                                        <el-table-column
+                                                label="Alignment"
+                                                header-align="center"
+                                                align="center">
+                                            <el-link style="font-size: 36px" icon="el-icon-files"
+                                                     :href="$baseURL+'aln/'+familyId+'.aln'"
+                                                     type="info" target="_blank" :underline="false">
+                                            </el-link>
+                                        </el-table-column>
+                                        <el-table-column
+                                                label="Tree"
+                                                header-align="center"
+                                                align="center">
+                                            <el-link style="font-size: 36px" icon="el-icon-notebook-2"
+                                                     :href="$baseURL+'trees/'+familyId+'.nwk'"
+                                                     type="info" target="_blank" :underline="false">
+                                            </el-link>
+                                        </el-table-column>
+                                        <el-table-column
+                                                label="HMM"
+                                                header-align="center"
+                                                align="center">
+                                            <el-link style="font-size: 36px" icon="el-icon-document"
+                                                     :href="$baseURL+'hmm/'+familyId+'.hmm'"
+                                                     type="info" target="_blank" :underline="false">
+                                            </el-link>
+                                        </el-table-column>
+                                        <el-table-column
+                                                label="Features"
+                                                header-align="center"
+                                                align="center">
+                                            <el-link style="font-size: 36px" icon="el-icon-data-analysis"
+                                                     :href="$baseURL+'family_feature/'+familyId+'.feat'"
+                                                     type="info" target="_blank" :underline="false">
+                                            </el-link>
+                                        </el-table-column>
+                                    </el-table>
+                                </el-tab-pane>
+                                <el-tab-pane label="Avg Features" name="family_avg_feature">
+                                    <el-table
+                                            :data="Family_Avg_Feature"
+                                            stripe
+                                            border>
+                                        <el-table-column
+                                                prop="tinyAA"
+                                                label="tinyAA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="smallAA"
+                                                label="smallAA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="aliphaticAA"
+                                                label="aliphaticAA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="aromaticAA"
+                                                label="aromaticAA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="nonpolarAA"
+                                                label="nonpolarAA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="polarAA"
+                                                label="polarAA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="chargedAA"
+                                                label="chargedAA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="basicAA"
+                                                label="basicAA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                    </el-table>
+                                    <el-table
+                                            :data="Family_Avg_Feature"
+                                            stripe
+                                            border>
+                                        <el-table-column
+                                                prop="acidicAA"
+                                                label="acidicAA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="charge"
+                                                label="charge"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="pI"
+                                                label="pI"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="aindex"
+                                                label="aindex"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="instaindex"
+                                                label="instaindex"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="boman"
+                                                label="boman"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="hydrophobicity"
+                                                label="hydrophobicity"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="hmoment"
+                                                label="hmoment"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                    </el-table>
+                                    <el-table
+                                            :data="Family_Avg_Feature"
+                                            stripe
+                                            border>
+                                        <el-table-column
+                                                prop="SA_Group1_residue0"
+                                                label="SA.Group1.residue0"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="SA_Group2_residue0"
+                                                label="SA.Group2.residue0"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="SA_Group3_residue0"
+                                                label="SA.Group3.residue0"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="HB_Group1_residue0"
+                                                label="HB.Group1.residue0"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="HB_Group2_residue0"
+                                                label="HB.Group2.residue0"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="HB_Group3_residue0"
+                                                label="HB.Group3.residue0"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                    </el-table>
+                                    <el-table
+                                            :data="Family_Avg_Feature"
+                                            stripe
+                                            border>
+                                        <el-table-column
+                                                prop="AGG"
+                                                label="AGG"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="AMYLO"
+                                                label="AMYLO"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="TURN"
+                                                label="TURN"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="HELIX"
+                                                label="HELIX"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="HELAGG"
+                                                label="HELAGG"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="BETA"
+                                                label="BETA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                    </el-table>
+                                </el-tab-pane>
+                                <el-tab-pane label="Std Features" name="family_std_feature">
+                                    <el-table
+                                            :data="Family_Std_Feature"
+                                            stripe
+                                            border>
+                                        <el-table-column
+                                                prop="tinyAA"
+                                                label="tinyAA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="smallAA"
+                                                label="smallAA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="aliphaticAA"
+                                                label="aliphaticAA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="aromaticAA"
+                                                label="aromaticAA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="nonpolarAA"
+                                                label="nonpolarAA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="polarAA"
+                                                label="polarAA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="chargedAA"
+                                                label="chargedAA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="basicAA"
+                                                label="basicAA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                    </el-table>
+                                    <el-table
+                                            :data="Family_Std_Feature"
+                                            stripe
+                                            border>
+                                        <el-table-column
+                                                prop="acidicAA"
+                                                label="acidicAA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="charge"
+                                                label="charge"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="pI"
+                                                label="pI"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="aindex"
+                                                label="aindex"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="instaindex"
+                                                label="instaindex"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="boman"
+                                                label="boman"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="hydrophobicity"
+                                                label="hydrophobicity"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="hmoment"
+                                                label="hmoment"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                    </el-table>
+                                    <el-table
+                                            :data="Family_Std_Feature"
+                                            stripe
+                                            border>
+                                        <el-table-column
+                                                prop="SA_Group1_residue0"
+                                                label="SA.Group1.residue0"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="SA_Group2_residue0"
+                                                label="SA.Group2.residue0"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="SA_Group3_residue0"
+                                                label="SA.Group3.residue0"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="HB_Group1_residue0"
+                                                label="HB.Group1.residue0"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="HB_Group2_residue0"
+                                                label="HB.Group2.residue0"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="HB_Group3_residue0"
+                                                label="HB.Group3.residue0"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                    </el-table>
+                                    <el-table
+                                            :data="Family_Std_Feature"
+                                            stripe
+                                            border>
+                                        <el-table-column
+                                                prop="AGG"
+                                                label="AGG"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="AMYLO"
+                                                label="AMYLO"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="TURN"
+                                                label="TURN"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="HELIX"
+                                                label="HELIX"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="HELAGG"
+                                                label="HELAGG"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="BETA"
+                                                label="BETA"
+                                                header-align="center"
+                                                align="center">
+                                        </el-table-column>
+                                    </el-table>
+                                </el-tab-pane>
+                            </el-tabs>
+                        </el-col>
+                    </el-row>
                 </el-card>
             </el-col>
         </el-row>
     </div>
 </template>
 
+<style>
+    .el-tabs__item {
+        font-size: 17px;
+    }
+</style>
+
 <script>
     export default {
-        name: 'Family',
+        name: 'Family_Card',
 
         data() {
             return {
                 familyId: '',
                 type: 'primary',
-                searchLoading: false,
+                buttonLoading: false,
+
+                isNull: true,
+                tabLoading: false,
+                activeName: 'family_amp',
+                Family_AMP: [],
+                Family_Avg_Feature: [],
+                Family_Std_Feature: [],
+            }
+        },
+
+        computed: {
+            shadow: function () {
+                if (this.isNull) {
+                    return 'never';
+                } else {
+                    return 'always';
+                }
+            }
+        },
+
+
+        mounted() {
+            if (Object.keys(this.$route.query).length !== 0) {
+                this.familyId = this.$route.query.Family_ID;
+                this.search();
             }
         },
 
         methods: {
+            clickSearch() {
+                if (this.familyId !== "") {
+                    this.type = "danger";
+                    this.buttonLoading = true;
+                    this.search();
+                } else {
+                    this.Family_AMP = [];
+                    this.Family_Avg_Feature = [];
+                    this.Family_Std_Feature = [];
+                    this.isNull = true;
+                }
+            },
+
             search() {
                 let self = this;
-                this.axios.get('/amp/index', {
+                this.isNull = true;
+                this.tabLoading = true;
+                this.axios.get('/family/index', {
                     params: {
-                        pageSize: this.pageSize,
-                        currentPage: this.currentPage,
-                        ampId: this.ampId,
                         familyId: this.familyId,
-                        sequence: this.sequence,
-                        minLength: this.length[0],
-                        maxLength: this.length[1],
-                        minpI: this.pI[0],
-                        maxpI: this.pI[1],
-                        minCharge: this.charge[0],
-                        maxCharge: this.charge[1]
                     }
                 }).then(function (response) {
-                    self.count = response.data['count'];
-                    self.tableData = response.data['AMP'];
+                    if (response.status === 200) {
+                        self.Family_AMP = response.data['Family_AMP'];
+                        self.Family_Avg_Feature = response.data['Family_Avg_Feature'];
+                        self.Family_Std_Feature = response.data['Family_Std_Feature'];
+                        self.isNull = false;
+                    } else if (response.status === 204) {
+                        self.Family_AMP = [];
+                        self.Family_Avg_Feature = [];
+                        self.Family_Std_Feature = [];
+                        self.isNull = true;
+                    }
                     self.type = 'primary';
-                    self.searchLoading = false;
-                    self.tableLoading = false;
+                    self.buttonLoading = false;
+                    self.tabLoading = false;
                 }).catch(function (error) {
                     console.log(error);
                 });
-            }
+            },
         }
     }
 </script>

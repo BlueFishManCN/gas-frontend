@@ -66,7 +66,8 @@
                                                 <router-link
                                                         :to="{path:'/family',query:{Family_ID:scope.row.Family_ID}}">
                                                     <el-tag type="info">
-                                                        <el-link icon="el-icon-link" type="info" :underline="false">
+                                                        <el-link icon="el-icon-connection" type="info"
+                                                                 :underline="false">
                                                             {{scope.row.Family_ID}}
                                                         </el-link>
                                                     </el-tag>
@@ -372,7 +373,7 @@
                                         </el-table-column>
                                         <el-table-column
                                                 prop="South_America"
-                                                label="SouthAmerica"
+                                                label="South America"
                                                 header-align="center"
                                                 align="center">
                                             <template slot-scope="scope">
@@ -386,7 +387,7 @@
                                         </el-table-column>
                                         <el-table-column
                                                 prop="North_America"
-                                                label="NorthAmerica"
+                                                label="North America"
                                                 header-align="center"
                                                 align="center">
                                             <template slot-scope="scope">
@@ -414,7 +415,7 @@
                                         </el-table-column>
                                         <el-table-column
                                                 prop="Pacific_Ocean"
-                                                label="PacificOcean"
+                                                label="Pacific Ocean"
                                                 header-align="center"
                                                 align="center">
                                             <template slot-scope="scope">
@@ -428,7 +429,7 @@
                                         </el-table-column>
                                         <el-table-column
                                                 prop="New_Zaeland"
-                                                label="NewZaeland"
+                                                label="New Zaeland"
                                                 header-align="center"
                                                 align="center">
                                             <template slot-scope="scope">
@@ -521,7 +522,7 @@
                                         </el-table-column>
                                         <el-table-column
                                                 prop="Oral_Cavity"
-                                                label="OralCavity"
+                                                label="Oral Cavity"
                                                 header-align="center"
                                                 align="center">
                                             <template slot-scope="scope">
@@ -535,7 +536,7 @@
                                         </el-table-column>
                                         <el-table-column
                                                 prop="Respiratory_Tract"
-                                                label="RespiratoryTract"
+                                                label="Respiratory Tract"
                                                 header-align="center"
                                                 align="center">
                                             <template slot-scope="scope">

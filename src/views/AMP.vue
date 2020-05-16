@@ -82,7 +82,7 @@
                             <template slot-scope="scope">
                                 <router-link :to="{path:'/amp_card',query:{AMP_ID:scope.row.AMP_ID}}">
                                     <el-tag type="info">
-                                        <el-link icon="el-icon-link" type="info" :underline="false">
+                                        <el-link icon="el-icon-connection" type="info" :underline="false">
                                             {{scope.row.AMP_ID}}
                                         </el-link>
                                     </el-tag>
@@ -113,7 +113,7 @@
                             <template slot-scope="scope">
                                 <router-link :to="{path:'/family',query:{Family_ID:scope.row.Family_ID}}">
                                     <el-tag type="info">
-                                        <el-link icon="el-icon-link" type="info" :underline="false">
+                                        <el-link icon="el-icon-connection" type="info" :underline="false">
                                             {{ scope.row.Family_ID }}
                                         </el-link>
                                     </el-tag>
@@ -152,6 +152,9 @@
         },
 
         mounted() {
+            if (Object.keys(this.$route.query).length !== 0) {
+                this.familyId = this.$route.query.Family_ID;
+            }
             this.tableLoading = true;
             this.search();
         },

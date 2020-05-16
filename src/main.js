@@ -19,6 +19,9 @@ axios.defaults.baseURL = 'http://106.12.47.33/gas/index.php';
 
 Vue.prototype.$echarts = echarts
 
+// Vue.prototype.$baseURL = 'http://127.0.0.1/gas/assets/';
+Vue.prototype.$baseURL = 'http://106.12.47.33/gas/assets/';
+
 new Vue({
     router,
     store,
