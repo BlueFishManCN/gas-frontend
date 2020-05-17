@@ -66,10 +66,7 @@
                                                 <router-link
                                                         :to="{path:'/family',query:{Family_ID:scope.row.Family_ID}}">
                                                     <el-tag type="info">
-                                                        <el-link icon="el-icon-connection" type="info"
-                                                                 :underline="false">
-                                                            {{scope.row.Family_ID}}
-                                                        </el-link>
+                                                        <i class="el-icon-connection"></i>{{scope.row.Family_ID}}
                                                     </el-tag>
                                                 </router-link>
                                             </template>
@@ -470,12 +467,15 @@
                                                 header-align="center"
                                                 align="center">
                                             <template slot-scope="scope">
-                                                <el-tag v-if="scope.row.Freshwater>0" type="info" effect="dark">
-                                                    {{scope.row.Freshwater}}
-                                                </el-tag>
-                                                <el-tag v-else type="info" effect="plain">
-                                                    {{scope.row.Freshwater}}
-                                                </el-tag>
+                                                <router-link
+                                                        :to="{path:'/environment',query:{Environment:'Freshwater'}}">
+                                                    <el-tag v-if="scope.row.Freshwater>0" type="info" effect="dark">
+                                                        <i class="el-icon-connection"></i> {{scope.row.Freshwater}}
+                                                    </el-tag>
+                                                    <el-tag v-else type="info" effect="plain">
+                                                        {{scope.row.Freshwater}}
+                                                    </el-tag>
+                                                </router-link>
                                             </template>
                                         </el-table-column>
                                         <el-table-column
@@ -484,12 +484,14 @@
                                                 header-align="center"
                                                 align="center">
                                             <template slot-scope="scope">
-                                                <el-tag v-if="scope.row.Gut>0" type="info" effect="dark">
-                                                    {{scope.row.Gut}}
-                                                </el-tag>
-                                                <el-tag v-else type="info" effect="plain">
-                                                    {{scope.row.Gut}}
-                                                </el-tag>
+                                                <router-link :to="{path:'/environment',query:{Environment:'Gut'}}">
+                                                    <el-tag v-if="scope.row.Gut>0" type="info" effect="dark">
+                                                        <i class="el-icon-connection"></i> {{scope.row.Gut}}
+                                                    </el-tag>
+                                                    <el-tag v-else type="info" effect="plain">
+                                                        {{scope.row.Gut}}
+                                                    </el-tag>
+                                                </router-link>
                                             </template>
                                         </el-table-column>
                                         <el-table-column
@@ -498,12 +500,14 @@
                                                 header-align="center"
                                                 align="center">
                                             <template slot-scope="scope">
-                                                <el-tag v-if="scope.row.Marine>0" type="info" effect="dark">
-                                                    {{scope.row.Marine}}
-                                                </el-tag>
-                                                <el-tag v-else type="info" effect="plain">
-                                                    {{scope.row.Marine}}
-                                                </el-tag>
+                                                <router-link :to="{path:'/environment',query:{Environment:'Marine'}}">
+                                                    <el-tag v-if="scope.row.Marine>0" type="info" effect="dark">
+                                                        <i class="el-icon-connection"></i> {{scope.row.Marine}}
+                                                    </el-tag>
+                                                    <el-tag v-else type="info" effect="plain">
+                                                        {{scope.row.Marine}}
+                                                    </el-tag>
+                                                </router-link>
                                             </template>
                                         </el-table-column>
                                         <el-table-column
@@ -512,12 +516,14 @@
                                                 header-align="center"
                                                 align="center">
                                             <template slot-scope="scope">
-                                                <el-tag v-if="scope.row.Milk>0" type="info" effect="dark">
-                                                    {{scope.row.Milk}}
-                                                </el-tag>
-                                                <el-tag v-else type="info" effect="plain">
-                                                    {{scope.row.Milk}}
-                                                </el-tag>
+                                                <router-link :to="{path:'/environment',query:{Environment:'Milk'}}">
+                                                    <el-tag v-if="scope.row.Milk>0" type="info" effect="dark">
+                                                        <i class="el-icon-connection"></i> {{scope.row.Milk}}
+                                                    </el-tag>
+                                                    <el-tag v-else type="info" effect="plain">
+                                                        {{scope.row.Milk}}
+                                                    </el-tag>
+                                                </router-link>
                                             </template>
                                         </el-table-column>
                                         <el-table-column
@@ -526,12 +532,15 @@
                                                 header-align="center"
                                                 align="center">
                                             <template slot-scope="scope">
-                                                <el-tag v-if="scope.row.Oral_Cavity>0" type="info" effect="dark">
-                                                    {{scope.row.Oral_Cavity}}
-                                                </el-tag>
-                                                <el-tag v-else type="info" effect="plain">
-                                                    {{scope.row.Oral_Cavity}}
-                                                </el-tag>
+                                                <router-link
+                                                        :to="{path:'/environment',query:{Environment:'Oral_Cavity'}}">
+                                                    <el-tag v-if="scope.row.Oral_Cavity>0" type="info" effect="dark">
+                                                        <i class="el-icon-connection"></i> {{scope.row.Oral_Cavity}}
+                                                    </el-tag>
+                                                    <el-tag v-else type="info" effect="plain">
+                                                        {{scope.row.Oral_Cavity}}
+                                                    </el-tag>
+                                                </router-link>
                                             </template>
                                         </el-table-column>
                                         <el-table-column
@@ -540,12 +549,17 @@
                                                 header-align="center"
                                                 align="center">
                                             <template slot-scope="scope">
-                                                <el-tag v-if="scope.row.Respiratory_Tract>0" type="info" effect="dark">
-                                                    {{scope.row.Respiratory_Tract}}
-                                                </el-tag>
-                                                <el-tag v-else type="info" effect="plain">
-                                                    {{scope.row.Respiratory_Tract}}
-                                                </el-tag>
+                                                <router-link
+                                                        :to="{path:'/environment',query:{Environment:'Respiratory_Tract'}}">
+                                                    <el-tag v-if="scope.row.Respiratory_Tract>0" type="info"
+                                                            effect="dark">
+                                                        <i class="el-icon-connection"></i>
+                                                        {{scope.row.Respiratory_Tract}}
+                                                    </el-tag>
+                                                    <el-tag v-else type="info" effect="plain">
+                                                        {{scope.row.Respiratory_Tract}}
+                                                    </el-tag>
+                                                </router-link>
                                             </template>
                                         </el-table-column>
                                         <el-table-column
@@ -554,12 +568,14 @@
                                                 header-align="center"
                                                 align="center">
                                             <template slot-scope="scope">
-                                                <el-tag v-if="scope.row.Skin>0" type="info" effect="dark">
-                                                    {{scope.row.Skin}}
-                                                </el-tag>
-                                                <el-tag v-else type="info" effect="plain">
-                                                    {{scope.row.Skin}}
-                                                </el-tag>
+                                                <router-link :to="{path:'/environment',query:{Environment:'Skin'}}">
+                                                    <el-tag v-if="scope.row.Skin>0" type="info" effect="dark">
+                                                        <i class="el-icon-connection"></i> {{scope.row.Skin}}
+                                                    </el-tag>
+                                                    <el-tag v-else type="info" effect="plain">
+                                                        {{scope.row.Skin}}
+                                                    </el-tag>
+                                                </router-link>
                                             </template>
                                         </el-table-column>
                                         <el-table-column
@@ -568,12 +584,14 @@
                                                 header-align="center"
                                                 align="center">
                                             <template slot-scope="scope">
-                                                <el-tag v-if="scope.row.Soil>0" type="info" effect="dark">
-                                                    {{scope.row.Soil}}
-                                                </el-tag>
-                                                <el-tag v-else type="info" effect="plain">
-                                                    {{scope.row.Soil}}
-                                                </el-tag>
+                                                <router-link :to="{path:'/environment',query:{Environment:'Soil'}}">
+                                                    <el-tag v-if="scope.row.Soil>0" type="info" effect="dark">
+                                                        <i class="el-icon-connection"></i> {{scope.row.Soil}}
+                                                    </el-tag>
+                                                    <el-tag v-else type="info" effect="plain">
+                                                        {{scope.row.Soil}}
+                                                    </el-tag>
+                                                </router-link>
                                             </template>
                                         </el-table-column>
                                         <el-table-column
@@ -582,12 +600,14 @@
                                                 header-align="center"
                                                 align="center">
                                             <template slot-scope="scope">
-                                                <el-tag v-if="scope.row.Surface>0" type="info" effect="dark">
-                                                    {{scope.row.Surface}}
-                                                </el-tag>
-                                                <el-tag v-else type="info" effect="plain">
-                                                    {{scope.row.Surface}}
-                                                </el-tag>
+                                                <router-link :to="{path:'/environment',query:{Environment:'Surface'}}">
+                                                    <el-tag v-if="scope.row.Surface>0" type="info" effect="dark">
+                                                        <i class="el-icon-connection"></i> {{scope.row.Surface}}
+                                                    </el-tag>
+                                                    <el-tag v-else type="info" effect="plain">
+                                                        {{scope.row.Surface}}
+                                                    </el-tag>
+                                                </router-link>
                                             </template>
                                         </el-table-column>
                                         <el-table-column
@@ -596,12 +616,14 @@
                                                 header-align="center"
                                                 align="center">
                                             <template slot-scope="scope">
-                                                <el-tag v-if="scope.row.Vagina>0" type="info" effect="dark">
-                                                    {{scope.row.Vagina}}
-                                                </el-tag>
-                                                <el-tag v-else type="info" effect="plain">
-                                                    {{scope.row.Vagina}}
-                                                </el-tag>
+                                                <router-link :to="{path:'/environment',query:{Environment:'Vagina'}}">
+                                                    <el-tag v-if="scope.row.Vagina>0" type="info" effect="dark">
+                                                        <i class="el-icon-connection"></i> {{scope.row.Vagina}}
+                                                    </el-tag>
+                                                    <el-tag v-else type="info" effect="plain">
+                                                        {{scope.row.Vagina}}
+                                                    </el-tag>
+                                                </router-link>
                                             </template>
                                         </el-table-column>
                                         <el-table-column
@@ -610,12 +632,15 @@
                                                 header-align="center"
                                                 align="center">
                                             <template slot-scope="scope">
-                                                <el-tag v-if="scope.row.Wastewater>0" type="info" effect="dark">
-                                                    {{scope.row.Wastewater}}
-                                                </el-tag>
-                                                <el-tag v-else type="info" effect="plain">
-                                                    {{scope.row.Wastewater}}
-                                                </el-tag>
+                                                <router-link
+                                                        :to="{path:'/environment',query:{Environment:'Wastewater'}}">
+                                                    <el-tag v-if="scope.row.Wastewater>0" type="info" effect="dark">
+                                                        <i class="el-icon-connection"></i> {{scope.row.Wastewater}}
+                                                    </el-tag>
+                                                    <el-tag v-else type="info" effect="plain">
+                                                        {{scope.row.Wastewater}}
+                                                    </el-tag>
+                                                </router-link>
                                             </template>
                                         </el-table-column>
                                     </el-table>
@@ -670,10 +695,13 @@
             }
         },
 
-
         mounted() {
             if (Object.keys(this.$route.query).length !== 0) {
-                this.ampId = this.$route.query.AMP_ID;
+                if (this.$route.query.AMP_ID) {
+                    this.ampId = this.$route.query.AMP_ID;
+                }
+                this.isNull = true;
+                this.tabLoading = true;
                 this.search();
             }
         },
@@ -683,6 +711,8 @@
                 if (this.ampId !== "") {
                     this.type = "danger";
                     this.buttonLoading = true;
+                    this.isNull = true;
+                    this.tabLoading = true;
                     this.search();
                 } else {
                     this.AMP_Family = [];
@@ -699,8 +729,6 @@
 
             search() {
                 let self = this;
-                this.isNull = true;
-                this.tabLoading = true;
                 this.axios.get('/amp_card/index', {
                     params: {
                         ampId: this.ampId,

@@ -10,13 +10,24 @@
                     <el-button size="medium" circle :loading="searchLoading" icon="el-icon-refresh" @click="reset">
                     </el-button>
                     <el-divider></el-divider>
-                    <h4>AMP ID</h4>
+                    <h4>AMP ID (Keyword)</h4>
                     <el-input v-model="ampId" :maxlength="16" show-word-limit clearable></el-input>
-                    <el-divider></el-divider>
-                    <h4>Family ID</h4>
+                    <h4>Family ID (Keyword)</h4>
                     <el-input v-model="familyId" :maxlength="16" show-word-limit clearable></el-input>
+                    <h4>Environment (Keyword)</h4>
+                    <el-select v-model="environment"
+                               clearable
+                               multiple
+                               filterable>
+                        <el-option
+                                v-for="item in options"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                        </el-option>
+                    </el-select>
                     <el-divider></el-divider>
-                    <h4>Sequence</h4>
+                    <h4>Sequence (Fuzzy)</h4>
                     <el-input type="textarea" v-model="sequence" :maxlength="100" show-word-limit :rows="3"
                               resize="none" clearable></el-input>
                     <el-divider></el-divider>
@@ -29,7 +40,6 @@
                             :step="1"
                             range>
                     </el-slider>
-                    <el-divider></el-divider>
                     <h4>pI Range</h4>
                     {{pI[0]}}-{{pI[1]}}
                     <el-slider
@@ -39,7 +49,6 @@
                             :step="0.1"
                             range>
                     </el-slider>
-                    <el-divider></el-divider>
                     <h4>Charge Range</h4>
                     {{charge[0]}}-{{charge[1]}}
                     <el-slider
@@ -82,9 +91,7 @@
                             <template slot-scope="scope">
                                 <router-link :to="{path:'/amp_card',query:{AMP_ID:scope.row.AMP_ID}}">
                                     <el-tag type="info">
-                                        <el-link icon="el-icon-connection" type="info" :underline="false">
-                                            {{scope.row.AMP_ID}}
-                                        </el-link>
+                                        <i class="el-icon-connection"></i>{{scope.row.AMP_ID}}
                                     </el-tag>
                                 </router-link>
                             </template>
@@ -113,9 +120,7 @@
                             <template slot-scope="scope">
                                 <router-link :to="{path:'/family',query:{Family_ID:scope.row.Family_ID}}">
                                     <el-tag type="info">
-                                        <el-link icon="el-icon-connection" type="info" :underline="false">
-                                            {{ scope.row.Family_ID }}
-                                        </el-link>
+                                        <i class="el-icon-connection"></i>{{ scope.row.Family_ID }}
                                     </el-tag>
                                 </router-link>
                             </template>
@@ -144,16 +149,57 @@
                 searchLoading: false,
                 ampId: '',
                 familyId: '',
+                environment: [],
                 sequence: '',
                 length: [10, 100],
                 pI: [0, 15],
-                charge: [-50, 50]
+                charge: [-50, 50],
+
+                options: [{
+                    value: 'Freshwater',
+                    label: 'Freshwater'
+                }, {
+                    value: 'Gut',
+                    label: 'Gut'
+                }, {
+                    value: 'Marine',
+                    label: 'Marine'
+                }, {
+                    value: 'Milk',
+                    label: 'Milk'
+                }, {
+                    value: 'Oral_Cavity',
+                    label: 'Oral Cavity'
+                }, {
+                    value: 'Respiratory_Tract',
+                    label: 'Respiratory Tract'
+                }, {
+                    value: 'Skin',
+                    label: 'Skin'
+                }, {
+                    value: 'Soil',
+                    label: 'Soil'
+                }, {
+                    value: 'Surface',
+                    label: 'Surface'
+                }, {
+                    value: 'Vagina',
+                    label: 'Vagina'
+                }, {
+                    value: 'Wastewater',
+                    label: 'Wastewater'
+                }],
             }
         },
 
         mounted() {
             if (Object.keys(this.$route.query).length !== 0) {
-                this.familyId = this.$route.query.Family_ID;
+                if (this.$route.query.Family_ID) {
+                    this.familyId = this.$route.query.Family_ID;
+                }
+                if (this.$route.query.Environment) {
+                    this.environment.push(this.$route.query.Environment);
+                }
             }
             this.tableLoading = true;
             this.search();
@@ -180,6 +226,7 @@
             reset() {
                 this.ampId = '';
                 this.familyId = '';
+                this.environment = [];
                 this.sequence = '';
                 this.length = [10, 100];
                 this.pI = [0, 15];
@@ -195,6 +242,7 @@
                         currentPage: this.currentPage,
                         ampId: this.ampId,
                         familyId: this.familyId,
+                        environment: this.environment,
                         sequence: this.sequence,
                         minLength: this.length[0],
                         maxLength: this.length[1],

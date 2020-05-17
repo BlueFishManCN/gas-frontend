@@ -5,13 +5,12 @@
                 <el-row type="flex" justify="center">
                     <el-col :span="22" type="flex" justify="middle">
                         <el-menu mode="horizontal" :default-active="activeIndex" :router="true">
-                            <el-menu-item>
+                            <el-menu-item index="/">
                                 <el-image style="height: 54px;width: 54px" :src="url" lazy></el-image>
                             </el-menu-item>
-                            <el-menu-item index="/">
+                            <el-menu-item index="/home">
                                 Global AMP Survey database (GAS)
                             </el-menu-item>
-                            <el-menu-item index="home">HOME</el-menu-item>
                             <el-submenu index="browse">
                                 <template slot="title">Browse</template>
                                 <el-menu-item index="amp">AMPs</el-menu-item>
@@ -64,6 +63,18 @@
         </el-container>
     </div>
 </template>
+
+<style>
+    .el-menu--horizontal > .el-menu-item.is-active {
+        border-bottom: 2px solid #FFFFFF;
+        color: #000;
+    }
+
+    .el-menu--horizontal > .el-submenu.is-active .el-submenu__title {
+        border-bottom: 2px solid #FFFFFF;
+        color: #000;
+    }
+</style>
 
 <script>
     export default {

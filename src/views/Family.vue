@@ -56,10 +56,7 @@
                                                 <router-link
                                                         :to="{path:'/amp',query:{Family_ID:scope.row.Family_ID}}">
                                                     <el-tag type="info">
-                                                        <el-link icon="el-icon-connection" type="info"
-                                                                 :underline="false">
-                                                            {{scope.row.AMP_Count}}
-                                                        </el-link>
+                                                        <i class="el-icon-connection"></i>{{scope.row.AMP_Count}}
                                                     </el-tag>
                                                 </router-link>
                                             </template>
@@ -77,6 +74,15 @@
                                             3
                                         </el-table-column>
                                     </el-table>
+                                    <el-row type="flex" justify="center">
+                                        <h4>Environments</h4>
+                                    </el-row>
+                                    <router-link v-for="item in Family_Environment" :key="item.Environment"
+                                                 :to="{path:'/environment',query:{Environment:item.Environment}}">
+                                        <el-tag style="margin-right: 18px; margin-bottom: 18px" type="info">
+                                            <i class="el-icon-connection"></i>{{item.Environment}}
+                                        </el-tag>
+                                    </router-link>
                                     <el-divider></el-divider>
                                     <el-row type="flex" justify="center">
                                         <h4>Downloads</h4>
@@ -550,6 +556,7 @@
                 tabLoading: false,
                 activeName: 'family_amp',
                 Family_AMP: [],
+                Family_Environment: [],
                 Family_Avg_Feature: [],
                 Family_Std_Feature: [],
             }
@@ -565,10 +572,13 @@
             }
         },
 
-
         mounted() {
             if (Object.keys(this.$route.query).length !== 0) {
-                this.familyId = this.$route.query.Family_ID;
+                if (this.$route.query.Family_ID) {
+                    this.familyId = this.$route.query.Family_ID;
+                }
+                this.isNull = true;
+                this.tabLoading = true;
                 this.search();
             }
         },
@@ -578,9 +588,12 @@
                 if (this.familyId !== "") {
                     this.type = "danger";
                     this.buttonLoading = true;
+                    this.isNull = true;
+                    this.tabLoading = true;
                     this.search();
                 } else {
                     this.Family_AMP = [];
+                    this.Family_Environment = [];
                     this.Family_Avg_Feature = [];
                     this.Family_Std_Feature = [];
                     this.isNull = true;
@@ -589,8 +602,6 @@
 
             search() {
                 let self = this;
-                this.isNull = true;
-                this.tabLoading = true;
                 this.axios.get('/family/index', {
                     params: {
                         familyId: this.familyId,
@@ -598,11 +609,13 @@
                 }).then(function (response) {
                     if (response.status === 200) {
                         self.Family_AMP = response.data['Family_AMP'];
+                        self.Family_Environment = response.data['Family_Environment'];
                         self.Family_Avg_Feature = response.data['Family_Avg_Feature'];
                         self.Family_Std_Feature = response.data['Family_Std_Feature'];
                         self.isNull = false;
                     } else if (response.status === 204) {
                         self.Family_AMP = [];
+                        self.Family_Environment = response.data['Family_Environment'];
                         self.Family_Avg_Feature = [];
                         self.Family_Std_Feature = [];
                         self.isNull = true;

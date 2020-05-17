@@ -30,6 +30,11 @@ const routes = [
         component: () => import(/* webpackChunkName: "about" */ '../views/Family.vue')
     },
     {
+        path: '/environment',
+        name: 'Environment',
+        component: () => import(/* webpackChunkName: "about" */ '../views/Environment.vue')
+    },
+    {
         path: '/blastp',
         name: 'Blastp',
         component: () => import(/* webpackChunkName: "about" */ '../views/Blastp.vue')
