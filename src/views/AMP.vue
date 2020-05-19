@@ -2,7 +2,7 @@
     <div class="AMP">
         <el-card shadow="always">
             <el-row :gutter="20" type="flex" justify="center">
-                <el-col :span="5" type="flex" justify="center">
+                <el-col :span="5" type="flex" justify="middle">
                     <h4>Search Filter</h4>
                     <el-button size="medium" :type="type" :loading="searchLoading" icon="el-icon-search"
                                @click="filter">Search
@@ -65,7 +65,7 @@
                     <el-button size="medium" circle :loading="searchLoading" icon="el-icon-refresh" @click="reset">
                     </el-button>
                 </el-col>
-                <el-col :span="19" type="flex" justify="center">
+                <el-col :span="19" type="flex" justify="middle">
                     <el-pagination
                             style="margin-bottom: 18px"
                             background
@@ -131,7 +131,6 @@
         </el-card>
     </div>
 </template>
-
 
 <script>
     export default {

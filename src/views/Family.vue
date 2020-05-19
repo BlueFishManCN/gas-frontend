@@ -6,15 +6,15 @@
                           clearable></el-input>
             </el-col>
             <el-col :span="3" type="flex" justify="middle">
-                <el-button size="medium" :type="type" :loading="buttonLoading" icon="el-icon-search"
+                <el-button size="medium" :type="type" :loading="searchLoading" icon="el-icon-search"
                            @click="clickSearch">
                     Search
                 </el-button>
             </el-col>
         </el-row>
 
-        <el-row>
-            <el-col :span="4" type="flex" justify="middle">
+        <el-row type="flex" justify="left">
+            <el-col :span="4" :offset="1" type="flex" justify="middle">
                 <h2>Family Card</h2>
             </el-col>
             <el-col :span="6" type="flex" justify="middle">
@@ -35,8 +35,9 @@
                 </h3>
             </el-col>
         </el-row>
+
         <el-row type="flex" justify="center">
-            <el-col>
+            <el-col type="flex" justify="middle">
                 <el-card :shadow="shadow">
                     <el-row type="flex" justify="center">
                         <el-col type="flex" justify="middle">
@@ -96,7 +97,7 @@
                                                 header-align="center"
                                                 align="center">
                                             <el-link style="font-size: 36px" icon="el-icon-picture"
-                                                     :href="$baseURL+'logo/'+familyId+'.pdf'"
+                                                     :href="$baseAssetsURL+'logo/'+familyId+'.pdf'"
                                                      type="info" target="_blank" :underline="false">
                                             </el-link>
                                         </el-table-column>
@@ -105,7 +106,7 @@
                                                 header-align="center"
                                                 align="center">
                                             <el-link style="font-size: 36px" icon="el-icon-s-fold"
-                                                     :href="$baseURL+'trees_figures/'+familyId+'.ascII.txt'"
+                                                     :href="$baseAssetsURL+'trees_figures/'+familyId+'.ascII.txt'"
                                                      type="info" target="_blank" :underline="false">
                                             </el-link>
                                         </el-table-column>
@@ -114,7 +115,7 @@
                                                 header-align="center"
                                                 align="center">
                                             <el-link style="font-size: 36px" icon="el-icon-files"
-                                                     :href="$baseURL+'aln/'+familyId+'.aln'"
+                                                     :href="$baseAssetsURL+'aln/'+familyId+'.aln'"
                                                      type="info" target="_blank" :underline="false">
                                             </el-link>
                                         </el-table-column>
@@ -123,7 +124,7 @@
                                                 header-align="center"
                                                 align="center">
                                             <el-link style="font-size: 36px" icon="el-icon-notebook-2"
-                                                     :href="$baseURL+'trees/'+familyId+'.nwk'"
+                                                     :href="$baseAssetsURL+'trees/'+familyId+'.nwk'"
                                                      type="info" target="_blank" :underline="false">
                                             </el-link>
                                         </el-table-column>
@@ -132,7 +133,7 @@
                                                 header-align="center"
                                                 align="center">
                                             <el-link style="font-size: 36px" icon="el-icon-document"
-                                                     :href="$baseURL+'hmm/'+familyId+'.hmm'"
+                                                     :href="$baseAssetsURL+'hmm/'+familyId+'.hmm'"
                                                      type="info" target="_blank" :underline="false">
                                             </el-link>
                                         </el-table-column>
@@ -141,7 +142,7 @@
                                                 header-align="center"
                                                 align="center">
                                             <el-link style="font-size: 36px" icon="el-icon-data-analysis"
-                                                     :href="$baseURL+'family_feature/'+familyId+'.feat'"
+                                                     :href="$baseAssetsURL+'family_feature/'+familyId+'.feat'"
                                                      type="info" target="_blank" :underline="false">
                                             </el-link>
                                         </el-table-column>
@@ -550,7 +551,7 @@
             return {
                 familyId: '',
                 type: 'primary',
-                buttonLoading: false,
+                searchLoading: false,
 
                 isNull: true,
                 tabLoading: false,
@@ -587,7 +588,7 @@
             clickSearch() {
                 if (this.familyId !== "") {
                     this.type = "danger";
-                    this.buttonLoading = true;
+                    this.searchLoading = true;
                     this.isNull = true;
                     this.tabLoading = true;
                     this.search();
@@ -621,7 +622,7 @@
                         self.isNull = true;
                     }
                     self.type = 'primary';
-                    self.buttonLoading = false;
+                    self.searchLoading = false;
                     self.tabLoading = false;
                 }).catch(function (error) {
                     console.log(error);

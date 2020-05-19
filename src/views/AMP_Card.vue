@@ -5,14 +5,14 @@
                 <el-input v-model="ampId" :maxlength="16" show-word-limit placeholder="AMP ID" clearable></el-input>
             </el-col>
             <el-col :span="3" type="flex" justify="middle">
-                <el-button size="medium" :type="type" :loading="buttonLoading" icon="el-icon-search"
+                <el-button size="medium" :type="type" :loading="searchLoading" icon="el-icon-search"
                            @click="clickSearch">
                     Search
                 </el-button>
             </el-col>
         </el-row>
 
-        <el-row>
+        <el-row type="flex" justify="left">
             <el-col :span="3" :offset="1" type="flex" justify="middle">
                 <h2>AMP Card</h2>
             </el-col>
@@ -34,8 +34,9 @@
                 </h3>
             </el-col>
         </el-row>
+
         <el-row type="flex" justify="center">
-            <el-col>
+            <el-col type="flex" justify="middle">
                 <el-card :shadow="shadow">
                     <el-row type="flex" justify="center">
                         <el-col type="flex" justify="middle">
@@ -671,7 +672,7 @@
             return {
                 ampId: '',
                 type: 'primary',
-                buttonLoading: false,
+                searchLoading: false,
 
                 isNull: true,
                 tabLoading: false,
@@ -710,7 +711,7 @@
             clickSearch() {
                 if (this.ampId !== "") {
                     this.type = "danger";
-                    this.buttonLoading = true;
+                    this.searchLoading = true;
                     this.isNull = true;
                     this.tabLoading = true;
                     this.search();
@@ -756,7 +757,7 @@
                         self.drawEnvironmentChart();
                     }
                     self.type = 'primary';
-                    self.buttonLoading = false;
+                    self.searchLoading = false;
                     self.tabLoading = false;
                 }).catch(function (error) {
                     console.log(error);

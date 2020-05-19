@@ -8,6 +8,7 @@ import store from './store'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import echarts from 'echarts'
+import qs from 'qs'
 
 Vue.config.productionTip = false
 
@@ -17,10 +18,17 @@ Vue.use(VueAxios, axios)
 // axios.defaults.baseURL = 'http://127.0.0.1/gas/index.php';
 axios.defaults.baseURL = 'http://106.12.47.33/gas/index.php';
 
+Vue.prototype.$baseURL = axios.defaults.baseURL;
+
 Vue.prototype.$echarts = echarts
 
-// Vue.prototype.$baseURL = 'http://127.0.0.1/gas/assets/';
-Vue.prototype.$baseURL = 'http://106.12.47.33/gas/assets/';
+// Vue.prototype.$baseAssetsURL = 'http://127.0.0.1/gas/assets/';
+Vue.prototype.$baseAssetsURL = 'http://106.12.47.33/gas/assets/';
+
+// Vue.prototype.$baseShellRunURL = 'http://127.0.0.1/gas/shell/run/';
+Vue.prototype.$baseShellRunURL = 'http://106.12.47.33/gas/shell/run/';
+
+Vue.prototype.$qs = qs
 
 new Vue({
     router,

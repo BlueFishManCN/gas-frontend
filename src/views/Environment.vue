@@ -18,8 +18,8 @@
             </el-col>
         </el-row>
 
-        <el-row>
-            <el-col :span="4" type="flex" justify="middle">
+        <el-row type="flex" justify="left">
+            <el-col :span="5" :offset="1" type="flex" justify="middle">
                 <h2>Environment Card</h2>
             </el-col>
             <el-col :span="6" type="flex" justify="middle">
@@ -40,8 +40,9 @@
                 </h3>
             </el-col>
         </el-row>
+
         <el-row type="flex" justify="center">
-            <el-col>
+            <el-col type="flex" justify="middle">
                 <el-card :shadow="shadow">
                     <el-row type="flex" justify="center">
                         <el-col type="flex" justify="middle">
@@ -97,7 +98,7 @@
                                             highlight-current-row>
                                         <el-table-column
                                                 prop="Family_ID"
-                                                label="Family_ID"
+                                                label="Family ID"
                                                 header-align="center"
                                                 align="center">
                                             <template slot-scope="scope">
