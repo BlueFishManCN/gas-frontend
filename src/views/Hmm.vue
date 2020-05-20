@@ -1,8 +1,8 @@
 <template>
-    <div class="Blastp">
+    <div class="Hmmer">
         <el-row type="flex" justify="left">
             <el-col :span="5" :offset="1" type="flex" justify="middle">
-                <h2>BLASTP</h2>
+                <h2>HMMER</h2>
             </el-col>
         </el-row>
 
@@ -29,7 +29,7 @@
                                         </el-input>
                                         <el-upload v-else
                                                    ref="upload"
-                                                   :action="$baseURL+'/blastp/file'"
+                                                   :action="$baseURL+'/hmmer/file'"
                                                    :data="uploadData"
                                                    drag
                                                    :auto-upload="false"
@@ -69,7 +69,7 @@
                                                 v-if="!resultType"
                                                 v-loading="tableLoading"
                                                 element-loading-spinner="el-icon-loading"
-                                                :data="Blastp_Sequence_Results"
+                                                :data="Hmmer_Sequence_Results"
                                                 stripe
                                                 border
                                                 highlight-current-row>
@@ -79,20 +79,6 @@
                                                     header-align="center"
                                                     align="center"
                                                     sortable>
-                                            </el-table-column>
-                                            <el-table-column
-                                                    label="AMP ID"
-                                                    header-align="center"
-                                                    align="center"
-                                                    sortable>
-                                                <template slot-scope="scope">
-                                                    <router-link
-                                                            :to="{path:'/amp_card',query:{AMP_ID:scope.row.AMP_ID}}">
-                                                        <el-tag type="info">
-                                                            <i class="el-icon-connection"></i>{{scope.row.AMP_ID}}
-                                                        </el-tag>
-                                                    </router-link>
-                                                </template>
                                             </el-table-column>
                                             <el-table-column
                                                     prop="Family_ID"
@@ -109,31 +95,58 @@
                                                     </router-link>
                                                 </template>
                                             </el-table-column>
-                                            <el-table-column
-                                                    prop="evalue"
-                                                    label="evalue"
-                                                    header-align="center"
-                                                    align="center"
-                                                    sortable>
+                                            <el-table-column header-align="center"
+                                                             align="center" label="full sequence">
+                                                <el-table-column
+                                                        prop="f-E-value"
+                                                        label="E-value"
+                                                        header-align="center"
+                                                        align="center"
+                                                        sortable>
+                                                </el-table-column>
+                                                <el-table-column
+                                                        prop="f-score"
+                                                        label="score"
+                                                        header-align="center"
+                                                        align="center"
+                                                        sortable>
+                                                </el-table-column>
+                                                <el-table-column
+                                                        prop="f-bias"
+                                                        label="bias"
+                                                        header-align="center"
+                                                        align="center"
+                                                        sortable>
+                                                </el-table-column>
                                             </el-table-column>
-                                            <el-table-column
-                                                    prop="score"
-                                                    label="score"
-                                                    header-align="center"
-                                                    align="center"
-                                                    sortable>
-                                            </el-table-column>
-                                            <el-table-column
-                                                    prop="qcovs"
-                                                    label="qcovs"
-                                                    header-align="center"
-                                                    align="center"
-                                                    sortable>
+                                            <el-table-column header-align="center"
+                                                             align="center" label="best 1 domain">
+                                                <el-table-column
+                                                        prop="b-E-value"
+                                                        label="E-value"
+                                                        header-align="center"
+                                                        align="center"
+                                                        sortable>
+                                                </el-table-column>
+                                                <el-table-column
+                                                        prop="b-score"
+                                                        label="score"
+                                                        header-align="center"
+                                                        align="center"
+                                                        sortable>
+                                                </el-table-column>
+                                                <el-table-column
+                                                        prop="b-bias"
+                                                        label="bias"
+                                                        header-align="center"
+                                                        align="center"
+                                                        sortable>
+                                                </el-table-column>
                                             </el-table-column>
                                         </el-table>
                                         <el-link v-if="resultType&&!isNull" style="font-size: 36px"
                                                  icon="el-icon-download"
-                                                 :href="$baseShellRunURL+Blastp_Sequence_Results"
+                                                 :href="$baseShellRunURL+Hmmer_Sequence_Results_File"
                                                  type="info" target="_blank" :underline="false">
                                         </el-link>
                                     </el-row>
@@ -155,7 +168,7 @@
 
 <script>
     export default {
-        name: 'Blastp',
+        name: 'Hmmer',
 
         data() {
             return {
@@ -170,7 +183,8 @@
                 icon: 'el-icon-video-play',
                 runLoading: false,
 
-                Blastp_Sequence_Results: [],
+                Hmmer_Sequence_Results: [],
+                Hmmer_Sequence_Results_File: '',
                 tableLoading: false,
             }
         },
@@ -186,7 +200,6 @@
             uploadData: function () {
                 return {
                     evalue: this.evalue,
-                    resultType: this.resultType
                 }
             }
         },
@@ -200,14 +213,15 @@
                     this.isNull = true;
                     this.tableLoading = true;
                     let self = this;
-                    this.axios.post('/blastp/index', this.$qs.stringify({
+                    this.axios.post('/hmmer/index', this.$qs.stringify({
                         sequence: this.sequence,
                         evalue: this.evalue,
                         resultType: this.resultType
                     }))
                         .then(function (response) {
                             if (response.status === 200) {
-                                self.Blastp_Sequence_Results = response.data['Blastp_Sequence_Results'];
+                                self.Hmmer_Sequence_Results = response.data['Hmmer_Sequence_Results'];
+                                self.Hmmer_Sequence_Results_File = response.data['Hmmer_Sequence_Results_File'];
                                 self.isNull = false;
                             }
                             self.type = 'primary';
@@ -220,7 +234,8 @@
                 } else if (this.sequenceType) {
                     this.$refs.upload.submit();
                 } else {
-                    this.Blastp_Sequence_Results = [];
+                    this.Hmmer_Sequence_Results = [];
+                    this.Hmmer_Sequence_Results_File = '';
                     this.isNull = true;
                 }
             },
@@ -237,7 +252,8 @@
                     this.type = 'primary';
                     this.icon = 'el-icon-video-play';
                     this.runLoading = false;
-                    this.Blastp_Sequence_Results = [];
+                    this.Hmmer_Sequence_Results = [];
+                    this.Hmmer_Sequence_Results_File = '';
                     this.isNull = true;
                     this.tableLoading = false;
                     this.$message.error('The file is limited to 500kb.');
@@ -246,7 +262,8 @@
             },
 
             handleSuccess(response) {
-                this.Blastp_Sequence_Results = response['Blastp_Sequence_Results'];
+                this.Hmmer_Sequence_Results = response['Hmmer_Sequence_Results'];
+                this.Hmmer_Sequence_Results_File = response['Hmmer_Sequence_Results_File'];
                 this.isNull = false;
                 this.type = 'primary';
                 this.icon = 'el-icon-video-play';
@@ -256,7 +273,8 @@
 
             handleError() {
                 this.$message.error('The file is limited to 500kb.');
-                this.Blastp_Sequence_Results = [];
+                this.Hmmer_Sequence_Results = [];
+                this.Hmmer_Sequence_Results_File = '';
                 this.isNull = false;
                 this.type = 'primary';
                 this.icon = 'el-icon-video-play';
