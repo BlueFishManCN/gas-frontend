@@ -24,7 +24,7 @@
                                 <el-menu-item index="hmm">HMM</el-menu-item>
                                 <el-menu-item index="macrel">Macrel</el-menu-item>
                             </el-submenu>
-                            <el-menu-item index="downloads">Downloads</el-menu-item>
+                            <el-menu-item index="download">Downloads</el-menu-item>
                             <el-menu-item index="contact">Contact</el-menu-item>
                         </el-menu>
                     </el-col>

@@ -11,7 +11,8 @@
                 <el-card :shadow="shadow">
                     <el-row type="flex" justify="center">
                         <el-col type="flex" justify="middle">
-                            <el-tabs v-model="activeName" tab-position="left">
+                            <el-tabs v-loading="tabLoading" element-loading-spinner="el-icon-loading"
+                                     v-model="activeName" tab-position="left">
                                 <el-tab-pane label="Query" name="query">
                                     <h4>Query Method</h4>
                                     <el-row type="flex" justify="left">
@@ -144,11 +145,9 @@
                                                 </el-table-column>
                                             </el-table-column>
                                         </el-table>
-                                        <el-link v-if="resultType&&!isNull" style="font-size: 36px"
-                                                 icon="el-icon-download"
-                                                 :href="$baseShellRunURL+Hmmer_Sequence_Results_File"
-                                                 type="info" target="_blank" :underline="false">
-                                        </el-link>
+                                        <el-button v-if="resultType&&!isNull" icon="el-icon-download" circle
+                                                   @click=download()>
+                                        </el-button>
                                     </el-row>
                                 </el-tab-pane>
                             </el-tabs>
@@ -174,6 +173,7 @@
             return {
                 isNull: true,
                 activeName: 'query',
+                tabLoading: false,
 
                 sequenceType: false,
                 sequence: '',
@@ -280,6 +280,29 @@
                 this.icon = 'el-icon-video-play';
                 this.runLoading = false;
                 this.tableLoading = false;
+            },
+
+            download() {
+                let self = this;
+                this.tabLoading = true;
+                this.axios.get('/hmmer/download', {
+                    params: {
+                        url: this.Hmmer_Sequence_Results_File
+                    },
+                    responseType: "blob"
+                }).then(function (response) {
+                    if (response.status === 200) {
+                        var url = window.URL.createObjectURL(response.data);
+                        var a = document.createElement("a");
+                        document.body.appendChild(a);
+                        a.href = url;
+                        a.download = 'output.txt';
+                        a.click();
+                    }
+                    self.tabLoading = false;
+                }).catch(function (error) {
+                    console.log(error);
+                });
             }
         }
     }

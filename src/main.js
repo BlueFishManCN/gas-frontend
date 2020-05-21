@@ -22,12 +22,6 @@ Vue.prototype.$baseURL = axios.defaults.baseURL;
 
 Vue.prototype.$echarts = echarts
 
-// Vue.prototype.$baseAssetsURL = 'http://127.0.0.1/gas/assets/';
-Vue.prototype.$baseAssetsURL = 'http://106.12.47.33/gas/assets/';
-
-// Vue.prototype.$baseShellRunURL = 'http://127.0.0.1/gas/shell/run/';
-Vue.prototype.$baseShellRunURL = 'http://106.12.47.33/gas/shell/run/';
-
 Vue.prototype.$qs = qs
 
 new Vue({

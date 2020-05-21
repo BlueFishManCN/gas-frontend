@@ -45,6 +45,16 @@ const routes = [
         component: () => import(/* webpackChunkName: "about" */ '../views/Hmm.vue')
     },
     {
+        path: '/macrel',
+        name: 'Macrel',
+        component: () => import(/* webpackChunkName: "about" */ '../views/Macrel.vue')
+    },
+    {
+        path: '/download',
+        name: 'Download',
+        component: () => import(/* webpackChunkName: "about" */ '../views/Download.vue')
+    },
+    {
         path: '/contact',
         name: 'Contact',
         // route level code-splitting

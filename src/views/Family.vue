@@ -96,55 +96,49 @@
                                                 label="HMM Logo"
                                                 header-align="center"
                                                 align="center">
-                                            <el-link style="font-size: 36px" icon="el-icon-picture"
-                                                     :href="$baseAssetsURL+'logo/'+familyId+'.pdf'"
-                                                     type="info" target="_blank" :underline="false">
-                                            </el-link>
+                                            <el-button icon="el-icon-picture" circle
+                                                       @click=logoDownload(familyId)>
+                                            </el-button>
                                         </el-table-column>
                                         <el-table-column
                                                 label="Tree Figure"
                                                 header-align="center"
                                                 align="center">
-                                            <el-link style="font-size: 36px" icon="el-icon-s-fold"
-                                                     :href="$baseAssetsURL+'trees_figures/'+familyId+'.ascII.txt'"
-                                                     type="info" target="_blank" :underline="false">
-                                            </el-link>
+                                            <el-button icon="el-icon-s-fold" circle
+                                                       @click=treesFiguresDownload(familyId)>
+                                            </el-button>
                                         </el-table-column>
                                         <el-table-column
                                                 label="Alignment"
                                                 header-align="center"
                                                 align="center">
-                                            <el-link style="font-size: 36px" icon="el-icon-files"
-                                                     :href="$baseAssetsURL+'aln/'+familyId+'.aln'"
-                                                     type="info" target="_blank" :underline="false">
-                                            </el-link>
+                                            <el-button icon="el-icon-files" circle
+                                                       @click=alnDownload(familyId)>
+                                            </el-button>
                                         </el-table-column>
                                         <el-table-column
                                                 label="Tree"
                                                 header-align="center"
                                                 align="center">
-                                            <el-link style="font-size: 36px" icon="el-icon-notebook-2"
-                                                     :href="$baseAssetsURL+'trees/'+familyId+'.nwk'"
-                                                     type="info" target="_blank" :underline="false">
-                                            </el-link>
+                                            <el-button icon="el-icon-notebook-2" circle
+                                                       @click=treesDownload(familyId)>
+                                            </el-button>
                                         </el-table-column>
                                         <el-table-column
                                                 label="HMM"
                                                 header-align="center"
                                                 align="center">
-                                            <el-link style="font-size: 36px" icon="el-icon-document"
-                                                     :href="$baseAssetsURL+'hmm/'+familyId+'.hmm'"
-                                                     type="info" target="_blank" :underline="false">
-                                            </el-link>
+                                            <el-button icon="el-icon-document" circle
+                                                       @click=hmmDownload(familyId)>
+                                            </el-button>
                                         </el-table-column>
                                         <el-table-column
                                                 label="Features"
                                                 header-align="center"
                                                 align="center">
-                                            <el-link style="font-size: 36px" icon="el-icon-data-analysis"
-                                                     :href="$baseAssetsURL+'family_feature/'+familyId+'.feat'"
-                                                     type="info" target="_blank" :underline="false">
-                                            </el-link>
+                                            <el-button icon="el-icon-data-analysis" circle
+                                                       @click=familyFeatureDownload(familyId)>
+                                            </el-button>
                                         </el-table-column>
                                     </el-table>
                                 </el-tab-pane>
@@ -628,6 +622,53 @@
                     console.log(error);
                 });
             },
+
+            logoDownload(file) {
+                this.download("/logo/", file + ".pdf");
+            },
+
+            treesFiguresDownload(file) {
+                this.download("/trees_figures/", file + ".ascII.txt");
+            },
+
+            alnDownload(file) {
+                this.download("/aln/", file + ".aln");
+            },
+
+            treesDownload(file) {
+                this.download("/trees/", file + ".nwk");
+            },
+
+            hmmDownload(file) {
+                this.download("/hmm/", file + ".hmm");
+            },
+
+            familyFeatureDownload(file) {
+                this.download("/family_feature/", file + ".feat");
+            },
+
+            download(path, file) {
+                let self = this;
+                this.tabLoading = true;
+                this.axios.get('/family/download', {
+                    params: {
+                        url: path + file
+                    },
+                    responseType: "blob"
+                }).then(function (response) {
+                    if (response.status === 200) {
+                        var url = window.URL.createObjectURL(response.data);
+                        var a = document.createElement("a");
+                        document.body.appendChild(a);
+                        a.href = url;
+                        a.download = file;
+                        a.click();
+                    }
+                    self.tabLoading = false;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
         }
     }
 </script>
