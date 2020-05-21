@@ -624,27 +624,27 @@
             },
 
             logoDownload(file) {
-                this.download("/logo/", file + ".pdf");
+                this.download("logo/", file + ".pdf");
             },
 
             treesFiguresDownload(file) {
-                this.download("/trees_figures/", file + ".ascII.txt");
+                this.download("trees_figures/", file + ".ascII.txt");
             },
 
             alnDownload(file) {
-                this.download("/aln/", file + ".aln");
+                this.download("aln/", file + ".aln");
             },
 
             treesDownload(file) {
-                this.download("/trees/", file + ".nwk");
+                this.download("trees/", file + ".nwk");
             },
 
             hmmDownload(file) {
-                this.download("/hmm/", file + ".hmm");
+                this.download("hmm/", file + ".hmm");
             },
 
             familyFeatureDownload(file) {
-                this.download("/family_feature/", file + ".feat");
+                this.download("family_feature/", file + ".feat");
             },
 
             download(path, file) {

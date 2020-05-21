@@ -28,8 +28,15 @@
                                                 sortable>
                                         </el-table-column>
                                         <el-table-column
+                                                prop="times"
+                                                label="Download Times"
+                                                header-align="center"
+                                                align="center"
+                                                sortable>
+                                        </el-table-column>
+                                        <el-table-column
                                                 prop="time"
-                                                label="Time"
+                                                label="Upload Time"
                                                 header-align="center"
                                                 align="center"
                                                 sortable>
@@ -62,8 +69,15 @@
                                                 sortable>
                                         </el-table-column>
                                         <el-table-column
+                                                prop="times"
+                                                label="Download Times"
+                                                header-align="center"
+                                                align="center"
+                                                sortable>
+                                        </el-table-column>
+                                        <el-table-column
                                                 prop="time"
-                                                label="Time"
+                                                label="Upload Time"
                                                 header-align="center"
                                                 align="center"
                                                 sortable>
