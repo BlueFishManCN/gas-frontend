@@ -12,8 +12,10 @@
                     <el-divider></el-divider>
                     <h4>AMP ID (Keyword)</h4>
                     <el-input v-model="ampId" :maxlength="16" show-word-limit clearable></el-input>
+                    <p>example: GAS000001</p>
                     <h4>Family ID (Keyword)</h4>
                     <el-input v-model="familyId" :maxlength="16" show-word-limit clearable></el-input>
+                    <p>example: GAF531</p>
                     <h4>Environment (Keyword)</h4>
                     <el-select v-model="environment"
                                clearable
@@ -30,6 +32,7 @@
                     <h4>Sequence (Fuzzy)</h4>
                     <el-input type="textarea" v-model="sequence" :maxlength="100" show-word-limit :rows="3"
                               resize="none" clearable></el-input>
+                    <p>example: AATPVALRWLLA</p>
                     <el-divider></el-divider>
                     <h4>Sequence Length</h4>
                     {{length[0]}}-{{length[1]}}

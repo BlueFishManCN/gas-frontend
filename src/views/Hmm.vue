@@ -19,7 +19,7 @@
                                         <el-switch
                                                 v-model="sequenceType"
                                                 inactive-text="Paste Sequences in FASTA format."
-                                                active-text="Submit a file in FASTA format.">
+                                                active-text="OR Submit a file in FASTA format.">
                                         </el-switch>
                                     </el-row>
                                     <el-row style="margin-top: 18px" type="flex" justify="left">
@@ -43,6 +43,8 @@
                                             <div class="el-upload__tip" slot="tip">FASTA format, limited to 500kb.</div>
                                         </el-upload>
                                     </el-row>
+                                    <el-button v-if="!sequenceType" type="text" @click="pasteExample">Paste example
+                                    </el-button>
                                     <h4>E-value</h4>
                                     <el-row type="flex" justify="left">
                                         <el-col :span="6" type="flex" justify="middle">
@@ -54,7 +56,7 @@
                                         <el-switch
                                                 v-model="resultType"
                                                 inactive-text="Get results from this web page."
-                                                active-text="Get results by downloading a file.">
+                                                active-text="OR get results by downloading a file.">
                                         </el-switch>
                                     </el-row>
                                     <el-button style="margin-top: 18px" size="medium" :type="type" :loading="runLoading"
@@ -205,6 +207,17 @@
         },
 
         methods: {
+            pasteExample() {
+                this.sequence = '>E1\n' +
+                    'AAAAAAAARLSVLAAATPVALRWLLAVLARHRLVVM\n' +
+                    '>E2\n' +
+                    'AAAAAAAHEPPRGQPGRIKRTQGAQGKDGCGLAARAL\n' +
+                    '>E3\n' +
+                    'AAAAAAAHEPPRGQPGRIKRTQGAQGKEGCGLAARAL\n' +
+                    '>E4\n' +
+                    'AAAAAAGISLLGAAGLRRKRK'
+            },
+
             run() {
                 if (this.sequence !== "" && !this.sequenceType) {
                     this.type = 'danger';

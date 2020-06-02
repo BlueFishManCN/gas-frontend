@@ -12,7 +12,7 @@
             <el-col type="flex" justify="middle">
                 <el-card shadow="always">
                     <div slot="header">
-                        About GAS
+                        About
                     </div>
                     <div>
                         <p>Blah, blah, blah...</p>

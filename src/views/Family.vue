@@ -2,7 +2,8 @@
     <div class="Family_Card">
         <el-row :gutter="12" type="flex" justify="end">
             <el-col :span="8" type="flex" justify="middle">
-                <el-input v-model="familyId" :maxlength="16" show-word-limit placeholder="Family ID"
+                <el-input v-model="familyId" :maxlength="16" show-word-limit
+                          placeholder="Input a Family ID like 'GAF531'"
                           clearable></el-input>
             </el-col>
             <el-col :span="3" type="flex" justify="middle">
@@ -43,7 +44,7 @@
                         <el-col type="flex" justify="middle">
                             <el-tabs v-loading="tabLoading" element-loading-spinner="el-icon-loading"
                                      v-model="activeName" tab-position="left">
-                                <el-tab-pane label="Basic" name="family_amp">
+                                <el-tab-pane label="Basic" name="basic">
                                     <el-table
                                             :data="Family_AMP"
                                             stripe
@@ -142,7 +143,7 @@
                                         </el-table-column>
                                     </el-table>
                                 </el-tab-pane>
-                                <el-tab-pane label="Avg Features" name="family_avg_feature">
+                                <el-tab-pane label="Avg Features" name="avg_feature">
                                     <el-table
                                             :data="Family_Avg_Feature"
                                             stripe
@@ -332,7 +333,7 @@
                                         </el-table-column>
                                     </el-table>
                                 </el-tab-pane>
-                                <el-tab-pane label="Std Features" name="family_std_feature">
+                                <el-tab-pane label="Std Features" name="std_feature">
                                     <el-table
                                             :data="Family_Std_Feature"
                                             stripe
@@ -549,7 +550,7 @@
 
                 isNull: true,
                 tabLoading: false,
-                activeName: 'family_amp',
+                activeName: 'basic',
                 Family_AMP: [],
                 Family_Environment: [],
                 Family_Avg_Feature: [],

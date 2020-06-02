@@ -3,7 +3,7 @@
         <el-row :gutter="12" type="flex" justify="end">
             <el-col :span="5" type="flex" justify="middle">
                 <el-select v-model="environment"
-                           placeholder="Select Environment"
+                           placeholder="Select an environment"
                            :disabled="selectLoading"
                            clearable
                            filterable
@@ -48,7 +48,7 @@
                         <el-col type="flex" justify="middle">
                             <el-tabs v-loading="tabLoading" element-loading-spinner="el-icon-loading"
                                      v-model="activeName" tab-position="left">
-                                <el-tab-pane label="Basic" name="environment_amp">
+                                <el-tab-pane label="Basic" name="basic">
                                     <el-table
                                             :data="Environment_AMP"
                                             stripe
@@ -74,20 +74,69 @@
                                                 align="center">
                                         </el-table-column>
                                     </el-table>
-                                    <el-divider></el-divider>
-                                    <el-row type="flex" justify="center">
-                                        <h4>Families</h4>
-                                    </el-row>
+                                </el-tab-pane>
+                                <el-tab-pane label="Sequences" name="sequence">
                                     <el-pagination
                                             style="margin-bottom: 18px"
                                             background
-                                            :page-size.sync="pageSize"
-                                            :total="count"
-                                            :current-page.sync="currentPage"
+                                            :page-size.sync="sPageSize"
+                                            :total="sCount"
+                                            :current-page.sync="sCurrentPage"
                                             layout="total, sizes, prev, next"
                                             :page-sizes="[10, 20, 30]"
-                                            @size-change="handleSizeChange"
-                                            @current-change="handleCurrentChange">
+                                            @size-change="sHandleSizeChange"
+                                            @current-change="sHandleCurrentChange">
+                                    </el-pagination>
+                                    <el-table
+                                            v-loading="tableLoading"
+                                            element-loading-spinner="el-icon-loading"
+                                            :data="Environment_Sequence"
+                                            stripe
+                                            border
+                                            highlight-current-row>
+                                        <el-table-column
+                                                label="AMP ID"
+                                                header-align="center"
+                                                align="center">
+                                            <template slot-scope="scope">
+                                                <router-link :to="{path:'/amp_card',query:{AMP_ID:scope.row.AMP_ID}}">
+                                                    <el-tag type="info">
+                                                        <i class="el-icon-connection"></i>{{scope.row.AMP_ID}}
+                                                    </el-tag>
+                                                </router-link>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="Sequence"
+                                                label="Sequence"
+                                                header-align="center">
+                                        </el-table-column>
+                                        <el-table-column
+                                                label="Family ID"
+                                                header-align="center"
+                                                align="center">
+                                            <template slot-scope="scope">
+                                                <router-link
+                                                        :to="{path:'/family',query:{Family_ID:scope.row.Family_ID}}">
+                                                    <el-tag type="info">
+                                                        <i class="el-icon-connection"></i>{{ scope.row.Family_ID }}
+                                                    </el-tag>
+                                                </router-link>
+                                            </template>
+                                        </el-table-column>
+                                    </el-table>
+                                </el-tab-pane>
+                                <el-tab-pane label="Families" name="family">
+                                    <el-pagination
+                                            style="margin-bottom: 18px"
+                                            background
+                                            :page-size.sync="fPageSize"
+                                            :total="fCount"
+                                            :current-page.sync="fCurrentPage"
+                                            layout="total, sizes, prev, next"
+                                            :page-sizes="[10, 20, 30]"
+                                            @size-change="fHandleSizeChange"
+                                            @current-change="fHandleCurrentChange">
                                     </el-pagination>
                                     <el-table
                                             v-loading="tableLoading"
@@ -190,12 +239,16 @@
 
                 isNull: true,
                 tabLoading: false,
-                activeName: 'environment_amp',
+                activeName: 'basic',
                 Environment_AMP: [],
 
-                count: 0,
-                pageSize: 10,
-                currentPage: 1,
+                sCount: 0,
+                sPageSize: 10,
+                sCurrentPage: 1,
+                Environment_Sequence: [],
+                fCount: 0,
+                fPageSize: 10,
+                fCurrentPage: 1,
                 Environment_Family: [],
                 tableLoading: false,
             }
@@ -223,14 +276,24 @@
         },
 
         methods: {
-            handleSizeChange() {
+            sHandleSizeChange() {
                 this.tableLoading = true;
-                this.search();
+                this.sequenceSearch();
             },
 
-            handleCurrentChange() {
+            sHandleCurrentChange() {
                 this.tableLoading = true;
-                this.search();
+                this.sequenceSearch();
+            },
+
+            fHandleSizeChange() {
+                this.tableLoading = true;
+                this.familySearch();
+            },
+
+            fHandleCurrentChange() {
+                this.tableLoading = true;
+                this.familySearch();
             },
 
             selectSearch() {
@@ -241,7 +304,9 @@
                     this.search();
                 } else {
                     this.Environment_AMP = [];
-                    this.count = 0;
+                    this.sCount = 0;
+                    this.Environment_Sequence = [];
+                    this.fCount = 0;
                     this.Environment_Family = [];
                     this.isNull = true;
                 }
@@ -251,19 +316,77 @@
                 let self = this;
                 this.axios.get('/environment/index', {
                     params: {
-                        pageSize: this.pageSize,
-                        currentPage: this.currentPage,
                         environment: this.environment,
+                        sPageSize: this.sPageSize,
+                        sCurrentPage: this.sCurrentPage,
+                        fPageSize: this.fPageSize,
+                        fCurrentPage: this.fCurrentPage,
                     }
                 }).then(function (response) {
                     if (response.status === 200) {
                         self.Environment_AMP = response.data['Environment_AMP'];
-                        self.count = response.data['Count'];
+                        self.sCount = response.data['sCount'];
+                        self.Environment_Sequence = response.data['Environment_Sequence'];
+                        self.fCount = response.data['fCount'];
                         self.Environment_Family = response.data['Environment_Family'];
                         self.isNull = false;
                     } else if (response.status === 204) {
                         self.Environment_AMP = [];
-                        self.count = 0;
+                        self.sCount = 0;
+                        self.Environment_Sequence = [];
+                        self.fCount = 0;
+                        self.Environment_Family = [];
+                        self.isNull = true;
+                    }
+                    self.selectLoading = false;
+                    self.tabLoading = false;
+                    self.tableLoading = false;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+
+            sequenceSearch() {
+                let self = this;
+                this.axios.get('/environment/sequence', {
+                    params: {
+                        environment: this.environment,
+                        sPageSize: this.sPageSize,
+                        sCurrentPage: this.sCurrentPage,
+                    }
+                }).then(function (response) {
+                    if (response.status === 200) {
+                        self.sCount = response.data['sCount'];
+                        self.Environment_Sequence = response.data['Environment_Sequence'];
+                        self.isNull = false;
+                    } else if (response.status === 204) {
+                        self.sCount = 0;
+                        self.Environment_Sequence = [];
+                        self.isNull = true;
+                    }
+                    self.selectLoading = false;
+                    self.tabLoading = false;
+                    self.tableLoading = false;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+
+            familySearch() {
+                let self = this;
+                this.axios.get('/environment/family', {
+                    params: {
+                        environment: this.environment,
+                        fPageSize: this.fPageSize,
+                        fCurrentPage: this.fCurrentPage,
+                    }
+                }).then(function (response) {
+                    if (response.status === 200) {
+                        self.fCount = response.data['fCount'];
+                        self.Environment_Family = response.data['Environment_Family'];
+                        self.isNull = false;
+                    } else if (response.status === 204) {
+                        self.fCount = 0;
                         self.Environment_Family = [];
                         self.isNull = true;
                     }

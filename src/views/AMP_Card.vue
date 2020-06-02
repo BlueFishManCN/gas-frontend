@@ -2,7 +2,8 @@
     <div class="AMP_Card">
         <el-row :gutter="12" type="flex" justify="end">
             <el-col :span="8" type="flex" justify="middle">
-                <el-input v-model="ampId" :maxlength="16" show-word-limit placeholder="AMP ID" clearable></el-input>
+                <el-input v-model="ampId" :maxlength="16" show-word-limit placeholder="Input an AMP ID like 'GAS000001'"
+                          clearable></el-input>
             </el-col>
             <el-col :span="3" type="flex" justify="middle">
                 <el-button size="medium" :type="type" :loading="searchLoading" icon="el-icon-search"
@@ -42,7 +43,7 @@
                         <el-col type="flex" justify="middle">
                             <el-tabs v-loading="tabLoading" element-loading-spinner="el-icon-loading"
                                      v-model="activeName" tab-position="left">
-                                <el-tab-pane label="Basic" name="family">
+                                <el-tab-pane label="Basic" name="basic">
                                     <el-table
                                             :data="AMP_Family"
                                             stripe>
@@ -74,7 +75,7 @@
                                         </el-table-column>
                                     </el-table>
                                 </el-tab-pane>
-                                <el-tab-pane label="Features" name="features">
+                                <el-tab-pane label="Features" name="feature">
                                     <el-table
                                             :data="AMP_Feature"
                                             stripe
@@ -282,17 +283,6 @@
                                         </el-table-column>
                                     </el-table>
                                 </el-tab-pane>
-                                <el-tab-pane label="Metagenomes" name="metagenome">
-                                    <el-tag style="margin-right: 18px; margin-bottom: 18px"
-                                            v-for="item in AMP_Metagenome" :key="item.id"
-                                            type="info">
-                                        <el-link icon="el-icon-link"
-                                                 :href="'https://www.ncbi.nlm.nih.gov/sra/?term='+item.metagenomes"
-                                                 type="info" target="_blank" :underline="false">
-                                            {{item.metagenomes}}
-                                        </el-link>
-                                    </el-tag>
-                                </el-tab-pane>
                                 <el-tab-pane label="Prediction" name="prediction">
                                     <el-table
                                             :data="AMP_Prediction"
@@ -322,6 +312,17 @@
                                                 align="center">
                                         </el-table-column>
                                     </el-table>
+                                </el-tab-pane>
+                                <el-tab-pane label="Metagenomes" name="metagenome">
+                                    <el-tag style="margin-right: 18px; margin-bottom: 18px"
+                                            v-for="item in AMP_Metagenome" :key="item.id"
+                                            type="info">
+                                        <el-link icon="el-icon-link"
+                                                 :href="'https://www.ncbi.nlm.nih.gov/sra/?term='+item.metagenomes"
+                                                 type="info" target="_blank" :underline="false">
+                                            {{item.metagenomes}}
+                                        </el-link>
+                                    </el-tag>
                                 </el-tab-pane>
                                 <el-tab-pane label="Countries" name="country">
                                     <el-table
@@ -676,7 +677,7 @@
 
                 isNull: true,
                 tabLoading: false,
-                activeName: 'family',
+                activeName: 'basic',
                 AMP_Family: [],
                 AMP_Feature: [],
                 AMP_Country: [],
