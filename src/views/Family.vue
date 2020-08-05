@@ -79,10 +79,59 @@
                                     <el-row type="flex" justify="center">
                                         <h4>Environments</h4>
                                     </el-row>
-                                    <router-link v-for="item in Family_Environment" :key="item.Environment"
-                                                 :to="{path:'/environment',query:{Environment:item.Environment}}">
+                                    <router-link v-if="Family_Environment.Freshwater!='0'" :to="{path:'/environment',query:{Environment:'Freshwater'}}">
                                         <el-tag style="margin-right: 18px; margin-bottom: 18px" type="info">
-                                            <i class="el-icon-connection"></i>{{item.Environment}}
+                                            <i class="el-icon-connection"></i>Freshwater
+                                        </el-tag>
+                                    </router-link>
+                                    <router-link v-if="Family_Environment.Gut!='0'" :to="{path:'/environment',query:{Environment:'Gut'}}">
+                                        <el-tag style="margin-right: 18px; margin-bottom: 18px" type="info">
+                                            <i class="el-icon-connection"></i>Gut
+                                        </el-tag>
+                                    </router-link>
+                                    <router-link v-if="Family_Environment.Marine!='0'" :to="{path:'/environment',query:{Environment:'Marine'}}">
+                                        <el-tag style="margin-right: 18px; margin-bottom: 18px" type="info">
+                                            <i class="el-icon-connection"></i>Marine
+                                        </el-tag>
+                                    </router-link>
+                                    <router-link v-if="Family_Environment.Milk!='0'" :to="{path:'/environment',query:{Environment:'Milk'}}">
+                                        <el-tag style="margin-right: 18px; margin-bottom: 18px" type="info">
+                                            <i class="el-icon-connection"></i>Milk
+                                        </el-tag>
+                                    </router-link>
+                                    <router-link v-if="Family_Environment.Oral_Cavity!='0'" :to="{path:'/environment',query:{Environment:'Oral_Cavity'}}">
+                                        <el-tag style="margin-right: 18px; margin-bottom: 18px" type="info">
+                                            <i class="el-icon-connection"></i>Oral_Cavity
+                                        </el-tag>
+                                    </router-link>
+                                    <router-link v-if="Family_Environment.Respiratory_Tract!='0'" :to="{path:'/environment',query:{Environment:'Respiratory_Tract'}}">
+                                        <el-tag style="margin-right: 18px; margin-bottom: 18px" type="info">
+                                            <i class="el-icon-connection"></i>Respiratory_Tract
+                                        </el-tag>
+                                    </router-link>
+                                    <router-link v-if="Family_Environment.Skin!='0'" :to="{path:'/environment',query:{Environment:'Skin'}}">
+                                        <el-tag style="margin-right: 18px; margin-bottom: 18px" type="info">
+                                            <i class="el-icon-connection"></i>Skin
+                                        </el-tag>
+                                    </router-link>
+                                    <router-link v-if="Family_Environment.Soil!='0'" :to="{path:'/environment',query:{Environment:'Soil'}}">
+                                        <el-tag style="margin-right: 18px; margin-bottom: 18px" type="info">
+                                            <i class="el-icon-connection"></i>Soil
+                                        </el-tag>
+                                    </router-link>
+                                    <router-link v-if="Family_Environment.Surface!='0'" :to="{path:'/environment',query:{Environment:'Surface'}}">
+                                        <el-tag style="margin-right: 18px; margin-bottom: 18px" type="info">
+                                            <i class="el-icon-connection"></i>Surface
+                                        </el-tag>
+                                    </router-link>
+                                    <router-link v-if="Family_Environment.Vagina!='0'" :to="{path:'/environment',query:{Environment:'Vagina'}}">
+                                        <el-tag style="margin-right: 18px; margin-bottom: 18px" type="info">
+                                            <i class="el-icon-connection"></i>Vagina
+                                        </el-tag>
+                                    </router-link>
+                                    <router-link v-if="Family_Environment.Wastewater!='0'" :to="{path:'/environment',query:{Environment:'Wastewater'}}">
+                                        <el-tag style="margin-right: 18px; margin-bottom: 18px" type="info">
+                                            <i class="el-icon-connection"></i>Wastewater
                                         </el-tag>
                                     </router-link>
                                     <el-divider></el-divider>
@@ -605,13 +654,13 @@
                 }).then(function (response) {
                     if (response.status === 200) {
                         self.Family_AMP = response.data['Family_AMP'];
-                        self.Family_Environment = response.data['Family_Environment'];
+                        self.Family_Environment = response.data['Family_Environment'][0];
                         self.Family_Avg_Feature = response.data['Family_Avg_Feature'];
                         self.Family_Std_Feature = response.data['Family_Std_Feature'];
                         self.isNull = false;
                     } else if (response.status === 204) {
                         self.Family_AMP = [];
-                        self.Family_Environment = response.data['Family_Environment'];
+                        self.Family_Environment = response.data['Family_Environment'][0];
                         self.Family_Avg_Feature = [];
                         self.Family_Std_Feature = [];
                         self.isNull = true;
